@@ -1,0 +1,94 @@
+.table-hover tbody tr.expandable-body:hover {
+    background-color: inherit !important;
+}
+
+[data-widget="expandable-table"] {
+    /* cursor: pointer; */
+}
+
+[data-widget="expandable-table"] i.expandable-table-caret {
+    transition: -webkit-transform 0.3s linear;
+    transition: transform 0.3s linear;
+    transition: transform 0.3s linear, -webkit-transform 0.3s linear;
+}
+
+[data-widget="expandable-table"][aria-expanded="true"] td i.expandable-table-caret[class*="right"] {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+[data-widget="expandable-table"][aria-expanded="true"] td i.expandable-table-caret[class*="left"] {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.expandable-body>td {
+    padding: 0 !important;
+    width: 100%;
+}
+
+.expandable-body>td>div,
+.expandable-body>td>p {
+    padding: 0.75rem;
+}
+
+.expandable-body .table {
+    width: calc(100% - 0.75rem);
+    margin: 0 0 0 0.75rem;
+}
+
+.expandable-body .table tr:first-child td,
+.expandable-body .table tr:first-child th {
+    border-top: none;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+    color: #fff;
+    background-color: #148770 !important;
+    border-color: #148770 !important;
+}
+
+.btn-file-upload {
+    position: relative;
+}
+
+.btn-file-upload input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    opacity: 0;
+    background-color: transparent;
+    color: transparent;
+    cursor: pointer;
+}
+
+.btn-file-upload {
+    position: relative;
+    color: #fff !important;
+    font-size: 13px !important;
+    /* padding: 4px 16px !important; */
+    overflow: hidden !important;
+}
+
+/* .btn-primary {
+    color: #fff;
+    background-color: #0084CE;
+    border-color: #0084CE;
+} */
+
+/* .btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    color: #fff;
+    background-color: #0e7bb8 !important;
+    border-color: #0e7bb8 !important;
+} */
