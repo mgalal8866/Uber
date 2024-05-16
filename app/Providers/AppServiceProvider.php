@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repository\DBUsersRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositoryinterface\UsersRepositoryinterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $repositories = [
+            UsersRepositoryinterface::class               => DBUsersRepository::class
+        ];
+        foreach ($repositories as $interface => $implementation) {
+            $this->app->bind($interface, $implementation);
+        }
     }
 
     /**

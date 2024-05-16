@@ -15,7 +15,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-
+    'api_latest' => 'v1',
     'name' => env('APP_NAME', 'Laravel'),
 
     /*
