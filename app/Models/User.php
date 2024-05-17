@@ -43,4 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+
+    public function otp()
+    {
+        return $this->hasMany(Otp::class);
+    }
+    public function address()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
 }

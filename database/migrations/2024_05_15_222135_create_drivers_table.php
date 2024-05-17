@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignIdFor(User::class);
+            $table->foreignId('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->string('year')->nullable();
             $table->string('color')->nullable();
             $table->string('model')->nullable();

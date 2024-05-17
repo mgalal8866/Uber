@@ -14,7 +14,8 @@ return new class extends Migration
     {
         Schema::create('user_credits', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignIdFor(User::class);
+            $table->foreignId('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name')->nullable();
             $table->string('number')->nullable();
             $table->string('exp_mounth')->nullable();

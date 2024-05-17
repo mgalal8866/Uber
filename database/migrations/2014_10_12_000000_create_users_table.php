@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('name')->unique()->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('email')->unique()->nullable();
-            $table->decimal('balance',8,2)->nullable();
+            $table->decimal('balance',8,2)->default(0);
             $table->string('live_lat')->default(0);
             $table->string('live_long')->default(0);
-            $table->string('password');
-            $table->rememberToken();
+            $table->boolean('accept_rules')->default(0);
+            // $table->rememberToken();
             $table->timestamps();
         });
     }

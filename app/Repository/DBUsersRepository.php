@@ -2,13 +2,15 @@
 
 namespace App\Repository;
 
+use App\Models\Otp;
 use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\LoginUserResource;
 use App\Repositoryinterface\UsersRepositoryinterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class DBUsersRepository implements UsersRepositoryinterface
 {
@@ -42,58 +44,54 @@ class DBUsersRepository implements UsersRepositoryinterface
     //     $data =  new LoginUserResource($user);
     //     return Resp($data, 'Success', 200, true);
     // }
-    public function login()
-    {
-        $data= ['phone'=>$this->request->phone,'password'=>$this->request->password];
-        $credentials = [
-            'phone' => $data['phone'],
-            'password' =>  $data['password'],
-        ];
-        if ($token = Auth::guard()->attempt($credentials)) {
-            $user = User::where('phone', '=', $data['phone'])->first();
-            $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
-            $data = [
-                'name'       => $user->name,
-                'email'       => $user->email,
-                'phone'      => $user->phone,
-                'access_token' => $token,
-            ];
-        } else {
-            return Resp('', 'Invalid Credentials', 404, false);
-        }
 
+    public function verify_otp()
+    {
+        $otp =  Otp::where(['otp' => $this->request->code, 'verify' => 0])->orderBy('created_at', 'desc')->first();
+        if ($otp == null) {
+            return Resp('', __('messages.code_not_correct'), 400, true);
+        }
+        $user = User::where(['phone' => $otp->phone])->with(['address'])->first();
         if ($user != null) {
-            return Resp($data, __('tan.successignup'), 200, true);
+            $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
+            return Resp(new UserResource($user), __('messages.success_login'), 200, true);
+        } else {
+            return Resp('', __('messages.notfound'), 400, false);
         }
     }
-
-    public function sendotp()
+    public function send_otp()
     {
-        $code = rand(123456, 999999);
-        return Resp($code, 'Success', 200, true);
+        $otp = rand(123456, 99999);
+        Otp::create(['phone' => $this->request->phone, 'otp' => $otp]);
+        return Resp('', __('messages.success_send_otp'), 200, true);
     }
+    public function check_verfiy_otp($phone)
+    {
+        $user = User::where('phone', $this->request->phone)->first();
+        if ($user != null) {
+            $otp = rand(123456, 99999);
+            $user->otp()->create(['otp', $otp]);
+            return Resp('', __('messages.successignup'), 200, true);
+        }
+        return Resp('', __('messages.notfound'), 200, false);
+    }
+
 
     public function signup()
     {
 
         $user =  User::create([
             'name'       => $this->request->name,
-            'email'       => $this->request->email,
+            'email'       => $this->request->email ?? null,
             'phone'      => $this->request->phone,
-            'password'   => $this->request->password,
+            'accept_rules'      => $this->request->accept_rule,
         ]);
-        $token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
+        $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
 
-        $data = [
-            'name'       => $user->name,
-            'email'       => $user->email,
-            'phone'      => $user->phone,
-            'access_token' => $token,
-        ];
+
         if ($user != null) {
-            return Resp($data, __('tan.successignup'), 200, true);
+            return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
         }
-
         return Resp('', 'error', 402, true);
     }
     // public function profile_update($request)

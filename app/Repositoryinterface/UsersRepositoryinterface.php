@@ -4,8 +4,12 @@ namespace App\Repositoryinterface;
 interface UsersRepositoryinterface{
 
 
-    public function login();
+ 
     public function signup();
+
+    public function verify_otp();
+    public function send_otp();
+
     // public function profile_update($request);
     // public function profile_details();
     // public function verificationcode($request);

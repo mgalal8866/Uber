@@ -9,7 +9,8 @@ Route::prefix('auth')->group(function () {
 
 
     Route::post('signup', [AuthenticationController::class, 'signup']);
-    Route::get('login', [AuthenticationController::class, 'login']);
+    Route::get('verify_otp', [AuthenticationController::class, 'verify_otp']);
+    Route::get('send_otp'  , [AuthenticationController::class, 'send_otp']);
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('check_otp', function(){
             return 'Success';
