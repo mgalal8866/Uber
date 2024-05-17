@@ -4,17 +4,20 @@ namespace App\Repository;
 
 use App\Models\Otp;
 use App\Models\User;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Traits\ImageProcessing;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\AddressResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\LoginUserResource;
-use App\Models\UserAddress;
 use App\Repositoryinterface\UsersRepositoryinterface;
 
 class DBUsersRepository implements UsersRepositoryinterface
 {
+    use ImageProcessing;
 
     protected Model $model;
     protected $request;
@@ -67,21 +70,25 @@ class DBUsersRepository implements UsersRepositoryinterface
         Otp::create(['phone' => $this->request->phone, 'otp' => $otp]);
         return Resp('', __('messages.success_send_otp'), 200, true);
     }
-   
+
 
 
     public function signup()
     {
+        $data = [
+            'name'          => $this->request->name,
+            'email'         => $this->request->email ?? null,
+            'phone'         => $this->request->phone,
+            'accept_rules'  => $this->request->accept_rule,
+        ];
+        $user =  User::create($data);
+        if ($this->request->image) {
+            $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
+            $user->image =  $dataX['image'];
+            $user->save();
+        }
 
-        $user =  User::create([
-            'name'       => $this->request->name,
-            'email'       => $this->request->email ?? null,
-            'phone'      => $this->request->phone,
-            'accept_rules'      => $this->request->accept_rule,
-        ]);
         $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
-
-
         if ($user != null) {
             return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
         }
@@ -99,7 +106,7 @@ class DBUsersRepository implements UsersRepositoryinterface
     {
         $user_id = Auth::user()->id;
         if ($this->request->is_default == 1) {
-           Useraddress::where(['user_id' =>  $user_id, 'is_default' => 1])->update(['is_default' => 0]);
+            Useraddress::where(['user_id' =>  $user_id, 'is_default' => 1])->update(['is_default' => 0]);
         }
         $address = UserAddress::create([
             'user_id' =>  $user_id,
@@ -111,7 +118,16 @@ class DBUsersRepository implements UsersRepositoryinterface
 
         ]);
         if ($address != null) {
-            return Resp('', __('messages.success'), 200, true);
+            return Resp(new AddressResource($address), __('messages.success'), 200, true);
+        }
+        return Resp('', 'error', 402, true);
+    }
+    public function address()
+    {
+        $user_id = Auth::user()->id;
+        $address = UserAddress::where('user_id', $user_id)->get();
+        if ($address != null) {
+            return Resp(AddressResource::collection($address), __('messages.success'), 200, true);
         }
         return Resp('', 'error', 402, true);
     }

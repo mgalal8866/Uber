@@ -11,6 +11,7 @@ interface UsersRepositoryinterface{
     public function send_otp();
     public function profile();
     public function address_new();
+    public function address();
 
     // public function profile_update($request);
     // public function profile_details();

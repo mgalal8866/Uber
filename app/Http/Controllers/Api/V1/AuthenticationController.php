@@ -31,4 +31,7 @@ class AuthenticationController extends Controller
     public function address_new(AddAddressRequest $request) {
        return $this->userRepositry->address_new();
     }
+    public function address() {
+       return $this->userRepositry->address();
+    }
 }

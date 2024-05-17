@@ -17,11 +17,9 @@ class UserResource extends JsonResource
         $data = [
             'name'     => $this->name,
             'phone'    => $this->phone,
+            'image'    => $this->imageurl??'',
             'email'    => $this->email ?? '',
             'balance'  => $this->balance ?? '0',
-            'lat'      => $this->live_lat ?? '0',
-            'long'     => $this->live_long ?? '0',
-            'address'  => AddressResource::collection($this->address),
 
         ];
 

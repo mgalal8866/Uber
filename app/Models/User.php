@@ -46,7 +46,14 @@ class User extends Authenticatable
 
 
 
+    public function getImageurlAttribute()
+    {
+        if($this->image ==null){
 
+            return '';
+        }
+        return path($this->id,'users')  . $this->image;
+    }
     public function otp()
     {
         return $this->hasMany(Otp::class);
