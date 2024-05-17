@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\SignUp;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddAddressRequest;
 use App\Repositoryinterface\UsersRepositoryinterface;
 
 class AuthenticationController extends Controller
@@ -14,7 +16,7 @@ class AuthenticationController extends Controller
         $this->userRepositry = $userRepositry;
     }
 
-    public function signup() {
+    public function signup(SignUp $request) {
        return $this->userRepositry->signup();
     }
     public function send_otp() {
@@ -22,5 +24,11 @@ class AuthenticationController extends Controller
     }
     public function verify_otp() {
        return $this->userRepositry->verify_otp();
+    }
+    public function profile() {
+       return $this->userRepositry->profile();
+    }
+    public function address_new(AddAddressRequest $request) {
+       return $this->userRepositry->address_new();
     }
 }

@@ -28,7 +28,10 @@ class UserResource extends JsonResource
         if ($this->token) {
             $data['token'] = $this->token;
         }
-        
+        // if ($this->credit) {
+        //     $data['creadit'] = $this->creadit;
+        // }
+
         return $data;
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\LoginUserResource;
+use App\Models\UserAddress;
 use App\Repositoryinterface\UsersRepositoryinterface;
 
 class DBUsersRepository implements UsersRepositoryinterface
@@ -91,6 +92,34 @@ class DBUsersRepository implements UsersRepositoryinterface
 
         if ($user != null) {
             return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
+        }
+        return Resp('', 'error', 402, true);
+    }
+    public function profile()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return Resp(new UserResource($user), __('messages.success'), 200, true);
+        }
+        return Resp('', 'error', 402, true);
+    }
+    public function address_new()
+    {
+        $user_id = Auth::user()->id;
+        if ($this->request->is_default == 1) {
+           Useraddress::where(['user_id' =>  $user_id, 'is_default' => 1])->update(['is_default' => 0]);
+        }
+        $address = UserAddress::create([
+            'user_id' =>  $user_id,
+            'name' => $this->request->name,
+            'address' => $this->request->address,
+            'lat' => $this->request->lat ?? '0',
+            'long' => $this->request->long ?? '0',
+            'is_default' => $this->request->is_default ?? '0'
+
+        ]);
+        if ($address != null) {
+            return Resp('', __('messages.success'), 200, true);
         }
         return Resp('', 'error', 402, true);
     }

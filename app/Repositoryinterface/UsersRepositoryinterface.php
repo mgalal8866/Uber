@@ -4,11 +4,13 @@ namespace App\Repositoryinterface;
 interface UsersRepositoryinterface{
 
 
- 
+
     public function signup();
 
     public function verify_otp();
     public function send_otp();
+    public function profile();
+    public function address_new();
 
     // public function profile_update($request);
     // public function profile_details();

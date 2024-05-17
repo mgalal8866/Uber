@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('lat')->nullable();
             $table->string('long')->nullable();
-            $table->boolean('Is_default')->default(0);
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
         });
     }
