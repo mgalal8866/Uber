@@ -63,19 +63,11 @@ class DBUsersRepository implements UsersRepositoryinterface
     public function send_otp()
     {
         $otp = rand(123456, 99999);
+        $otp = '111111';
         Otp::create(['phone' => $this->request->phone, 'otp' => $otp]);
         return Resp('', __('messages.success_send_otp'), 200, true);
     }
-    public function check_verfiy_otp($phone)
-    {
-        $user = User::where('phone', $this->request->phone)->first();
-        if ($user != null) {
-            $otp = rand(123456, 99999);
-            $user->otp()->create(['otp', $otp]);
-            return Resp('', __('messages.successignup'), 200, true);
-        }
-        return Resp('', __('messages.notfound'), 200, false);
-    }
+   
 
 
     public function signup()
