@@ -79,32 +79,29 @@ class DBUsersRepository implements UsersRepositoryinterface
     {
         DB::beginTransaction();
         try {
-        $data = [
-            'name'          => $this->request->name,
-            'email'         => $this->request->email ?? null,
-            'phone'         => $this->request->phone,
-            'accept_rules'  => $this->request->accept_rule,
-        ];
-        $user =  User::create($data);
-        if ($this->request->image) {
-            $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
-            $user->image =  $dataX['image'];
-            $user->save();
+            $data = [
+                'name'          => $this->request->name,
+                'email'         => $this->request->email ?? null,
+                'phone'         => $this->request->phone,
+                'accept_rules'  => $this->request->accept_rule,
+            ];
+            $user =  User::create($data);
+            if ($this->request->image) {
+                $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
+                $user->image =  $dataX['image'];
+                $user->save();
+            }
+            $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
+            if ($user != null) {
+                DB::commit();
+                return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
+            }
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return Resp('', $e->getMessage(), 404, true);
+            // return false;
         }
-
-        $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
-        if ($user != null) {
-            return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
-        }
-
-        DB::commit();
-
-
-    } catch (\Exception $e) {
-        DB::rollback();
-        return Resp('', $e->getMessage(), 404, true);
-        // return false;
-    }
     }
     public function profile()
     {
@@ -156,7 +153,7 @@ class DBUsersRepository implements UsersRepositoryinterface
         }
         if ($this->request->has('image')) {
             if ($user->image != null) {
-               $this->deletefile($user->image, $user->id, 'Users');
+                $this->deletefile($user->image, $user->id, 'Users');
             }
             $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
             $user->image =  $dataX['image'];
