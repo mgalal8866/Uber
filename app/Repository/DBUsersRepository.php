@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use App\Traits\ImageProcessing;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -76,6 +77,8 @@ class DBUsersRepository implements UsersRepositoryinterface
 
     public function signup()
     {
+        DB::beginTransaction();
+        try {
         $data = [
             'name'          => $this->request->name,
             'email'         => $this->request->email ?? null,
@@ -93,7 +96,15 @@ class DBUsersRepository implements UsersRepositoryinterface
         if ($user != null) {
             return Resp(new UserResource($user), __('messages.success_signup'), 200, true);
         }
-        return Resp('', 'error', 402, true);
+
+        DB::commit();
+
+
+    } catch (\Exception $e) {
+
+        return Resp('', $e->getMessage(), 404, true);
+        // return false;
+    }
     }
     public function profile()
     {
