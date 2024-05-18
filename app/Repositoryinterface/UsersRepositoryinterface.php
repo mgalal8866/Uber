@@ -10,6 +10,7 @@ interface UsersRepositoryinterface{
     public function verify_otp();
     public function send_otp();
     public function profile();
+    public function profile_update();
     public function address_new();
     public function address();
 

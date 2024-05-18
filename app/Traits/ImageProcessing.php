@@ -11,9 +11,9 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 trait ImageProcessing
 {
-    public function path($course_id, $folder, $folder2 = null)
+    public function path($id, $folder, $folder2 = null)
     {
-        $path = public_path() . '/files' . '/' . $folder . '/' . $course_id . '/';
+        $path = public_path() . '/files' . '/' . $folder . '/' . $id . '/';
         if ($folder2 != null) {
 
             $path =  $path . '/' .  $folder2 . '/';
@@ -22,6 +22,17 @@ trait ImageProcessing
             mkdir($path, 0777, true);
         }
         return  $path;
+    }
+    public function deletefile($filename,$id, $folder, $folder2 = null)
+    {
+        $path = public_path() . '/files' . '/' . $folder . '/' . $id . '/';
+        if ($folder2 != null) {
+            $path =  $path . '/' .  $folder2 . '/';
+        }
+        
+        if (File::exists($path.$filename)) {
+            File::delete($path.$filename);
+        }
     }
     public function get_mime($mime)
     {
@@ -40,18 +51,18 @@ trait ImageProcessing
 
         return $extension;
     }
-    public function saveImage($image, $course_id, $folder, $folder2 = null)
+    public function saveImage($image, $id, $folder, $folder2 = null)
     {
         $manager = new ImageManager(new Driver());
         $img = $manager->read($image);
         $str_random = Str::random(4);
         $imgpath = $str_random . '-' . time() . '.' . $image->getClientOriginalExtension();
 
-        $img->toJpeg(80)->save($this->path($course_id, $folder, $folder2) .  $imgpath);
+        $img->toJpeg(80)->save($this->path($id, $folder, $folder2) .  $imgpath);
 
         return $imgpath;
     }
-    public function aspect4resize($image, $width, $height, $course_id, $folder, $folder2 = null)
+    public function aspect4resize($image, $width, $height, $id, $folder, $folder2 = null)
     {
         $manager = new ImageManager(new Driver());
         $img = $manager->read($image);
@@ -63,7 +74,7 @@ trait ImageProcessing
 
         $imgpath = $str_random . time() . '.' . $image->getClientOriginalExtension();
 
-        $img->toJpeg(80)->save($this->path($course_id, $folder, $folder2)  .  $imgpath);
+        $img->toJpeg(80)->save($this->path($id, $folder, $folder2)  .  $imgpath);
         // $img->save(storage_path('app/imagesfp') . '/' . $imgpath);
 
         return $imgpath;
@@ -92,20 +103,20 @@ trait ImageProcessing
         $img->save(storage_path('app/imagesfp') . '/' . $imgpath);
         return $imgpath;
     }
-    public function saveImageAndThumbnail($Thefile, $thumb = false, $course_id = '23123', $folder = 'course', $folder2 = null, $height = null, $width = null)
+    public function saveImageAndThumbnail($Thefile, $thumb = false, $id = '23123', $folder = 'course', $folder2 = null, $height = null, $width = null)
     {
         $dataX = array();
         if ($height != null && $width != null) {
 
-            $dataX['image'] = $this->aspect4resize($Thefile,  $width, $height, $course_id, $folder, $folder2);
+            $dataX['image'] = $this->aspect4resize($Thefile,  $width, $height, $id, $folder, $folder2);
         } else {
-            $dataX['image'] = $this->saveImage($Thefile, $course_id, $folder, $folder2);
+            $dataX['image'] = $this->saveImage($Thefile, $id, $folder, $folder2);
         }
 
         if ($thumb) {
-            $dataX['thumbnailsm'] = $this->aspect4resize($Thefile, 256, 144, $course_id, $folder, $folder2);
-            $dataX['thumbnailmd'] = $this->aspect4resize($Thefile, 426, 240, $course_id, $folder, $folder2);
-            $dataX['thumbnailxl'] = $this->aspect4resize($Thefile, 640, 360, $course_id, $folder, $folder2);
+            $dataX['thumbnailsm'] = $this->aspect4resize($Thefile, 256, 144, $id, $folder, $folder2);
+            $dataX['thumbnailmd'] = $this->aspect4resize($Thefile, 426, 240, $id, $folder, $folder2);
+            $dataX['thumbnailxl'] = $this->aspect4resize($Thefile, 640, 360, $id, $folder, $folder2);
         }
 
         return $dataX;
@@ -122,7 +133,7 @@ trait ImageProcessing
     }
 
 
-    public function uploadfile($file, $course_id = null, $folder = null, $folder2 = null)
+    public function uploadfile($file, $id = null, $folder = null, $folder2 = null)
     {
     }
     public function applyWatermark($imgewatermark, $imageorginal)

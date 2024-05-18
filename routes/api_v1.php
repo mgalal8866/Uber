@@ -13,6 +13,7 @@ Route::prefix('auth')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('profile', [AuthenticationController::class, 'profile']);
+        Route::post('profile/update', [AuthenticationController::class, 'profile_update']);
         Route::get('address', [AuthenticationController::class, 'address']);
         Route::post('address/new', [AuthenticationController::class, 'address_new']);
     });

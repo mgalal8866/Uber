@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\ImageProcessing;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\AddressResource;
 use Illuminate\Database\Eloquent\Model;
@@ -131,25 +132,30 @@ class DBUsersRepository implements UsersRepositoryinterface
         }
         return Resp('', 'error', 402, true);
     }
-    // public function profile_update($request)
-    // {
+    public function profile_update()
+    {
 
-    //     $id = Auth::guard('api')->user()->id;
-    //     $user =  User::find($id);
-
-    //     if ($this->request->has('name')) {
-    //         $user->name = $this->request->name;
-    //     }
-
-
-    //     $user->save();
-    //     if ($user != null) {
-
-    //         $data =  new LoginUserResource($user);
-    //         return Resp($data, 'Success', 200, true);
-    //     }
-    //     return Resp('', 'error', 402, true);
-    // }
+        $id = Auth::user()->id;
+        $user =  User::find($id);
+        if ($this->request->has('name')) {
+            $user->name = $this->request->name;
+        }
+        if ($this->request->has('email')) {
+            $user->email = $this->request->email;
+        }
+        if ($this->request->has('image')) {
+            if ($user->image != null) {
+               $this->deletefile($user->image, $user->id, 'Users');
+            }
+            $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
+            $user->image =  $dataX['image'];
+        }
+        $user->save();
+        if ($user != null) {
+            return Resp(new UserResource($user), __('messages.success_update_profile'), 200, true);
+        }
+        return Resp('', 'error', 402, true);
+    }
     // public function profile_details()
     // {
 

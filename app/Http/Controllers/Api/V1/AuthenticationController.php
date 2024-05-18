@@ -28,6 +28,9 @@ class AuthenticationController extends Controller
     public function profile() {
        return $this->userRepositry->profile();
     }
+    public function profile_update() {
+       return $this->userRepositry->profile_update();
+    }
     public function address_new(AddAddressRequest $request) {
        return $this->userRepositry->address_new();
     }
