@@ -87,7 +87,7 @@ class DBUsersRepository implements UsersRepositoryinterface
             ];
             $user =  User::create($data);
             if ($this->request->image) {
-                $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
+                $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'users');
                 $user->image =  $dataX['image'];
                 $user->save();
             }
@@ -154,9 +154,9 @@ class DBUsersRepository implements UsersRepositoryinterface
         }
         if ($this->request->has('image')) {
             if ($user->image != null) {
-                $this->deletefile($user->image, $user->id, 'Users');
+                $this->deletefile($user->image, $user->id, 'users');
             }
-            $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'Users');
+            $dataX = $this->saveImageAndThumbnail($this->request->image, false, $user->id, 'users');
             $user->image =  $dataX['image'];
         }
         $user->save();
