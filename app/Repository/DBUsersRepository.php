@@ -101,7 +101,7 @@ class DBUsersRepository implements UsersRepositoryinterface
 
 
     } catch (\Exception $e) {
-
+        DB::rollback();
         return Resp('', $e->getMessage(), 404, true);
         // return false;
     }
