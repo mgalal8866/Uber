@@ -3,27 +3,27 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Traits\MapsProcessing;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AddressResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+
+
     public function toArray(Request $request): array
     {
-        $data = [
+
+
+         $response = distancematrix($this->lat . ',' . $this->long, ($request->lat??$this->lat) . ',' .( $request->long?? $this->long));
+
+
+        return[
             'name'        => $this->name,
             'address'     => $this->address,
-            'is_default'  => $this->is_default,
-            'lat'         => $this->lat,
-            'long'        => $this->long,
+            'distance'     => $request->lat?$response['rows'][0]['elements'][0]['distance']['text'] . ',' . $response['rows'][0]['elements'][0]['duration']['text']:"",
+
+
 
         ];
-
-
-        return $data;
     }
 }

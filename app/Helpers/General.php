@@ -2,8 +2,28 @@
 
 use App\Models\Setting;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
+if (!function_exists('distancematrix')) {
+    function distancematrix($origin, $destination)
+    {
+        $google_map_api_key = env('GOOGLE_MAP_API_KEY');
+        $response = Http::get('https://maps.googleapis.com/maps/api/distancematrix/json', [
+            'origins' => $origin,
+            'destinations' => $destination,
+            'key' => $google_map_api_key,
+            'mode' => 'driving'
+        ]);
+        if ($response->successful()) {
+            return $response->json();
+        }
+        return [
+            'status' => 'error',
+            'message' => 'Failed to retrieve distance matrix data.'
+        ];
+    }
+}
 function getsetting($cache, array $value)
 {
     // Cache::forget($cache);

@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\SignUp;
+use App\Traits\MapsProcessing;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use App\Http\Requests\AddAddressRequest;
 use App\Repositoryinterface\UsersRepositoryinterface;
 
 class AuthenticationController extends Controller
 {
-
+use MapsProcessing;
     private $userRepositry;
     public function __construct(UsersRepositoryinterface $userRepositry)
     {
         $this->userRepositry = $userRepositry;
+    }
+    public function calc(Request $r)
+    {
+        $response=  distancematrix(($r->lat1.','.$r->long1),($r->lat2.','.$r->long2));
+
+            return $response ;
     }
 
     public function signup(SignUp $request) {

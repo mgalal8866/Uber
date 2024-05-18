@@ -10,6 +10,7 @@ Route::prefix('auth')->group(function () {
     Route::get('verify_otp', [AuthenticationController::class, 'verify_otp']);
     Route::get('send_otp', [AuthenticationController::class, 'send_otp']);
 });
+Route::get('calc', [AuthenticationController::class, 'calc']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('profile', [AuthenticationController::class, 'profile']);

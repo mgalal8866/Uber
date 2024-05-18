@@ -6,6 +6,7 @@ use App\Models\Otp;
 use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Traits\MapsProcessing;
 use App\Traits\ImageProcessing;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
@@ -19,7 +20,7 @@ use App\Repositoryinterface\UsersRepositoryinterface;
 
 class DBUsersRepository implements UsersRepositoryinterface
 {
-    use ImageProcessing;
+    use ImageProcessing,MapsProcessing;
 
     protected Model $model;
     protected $request;
@@ -134,8 +135,10 @@ class DBUsersRepository implements UsersRepositoryinterface
     }
     public function address()
     {
+
         $user_id = Auth::user()->id;
         $address = UserAddress::where('user_id', $user_id)->get();
+    
         if ($address != null) {
             return Resp(AddressResource::collection($address), __('messages.success'), 200, true);
         }
