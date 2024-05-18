@@ -14,8 +14,7 @@ class AddressResource extends JsonResource
     {
         if ($request->has('lat') && $request->has('lat') &&  $request->lat != '' &&   $request->long != '' && $this->lat != null  && $this->long != null  ) {
             $response = distancematrix($this->lat . ',' . $this->long, ($request->lat ?? $this->lat) . ',' . ($request->long ?? $this->long));
-            $response = $response ;
-            // $response = $response['rows'][0]['elements'][0]['distance']['text'] . ',' . $response['rows'][0]['elements'][0]['duration']['text'];
+            $response = $response['rows'][0]['elements'][0]['distance']['text'] . ',' . $response['rows'][0]['elements'][0]['duration']['text'];
         }
 
 
