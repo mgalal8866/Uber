@@ -63,7 +63,7 @@ class DBUsersRepository implements UsersRepositoryinterface
             $user->token = $user->createToken($user->name . '-AuthToken')->plainTextToken;
             return Resp(new UserResource($user), __('messages.success_login'), 200, true);
         } else {
-            return Resp('', __('messages.notfound'), 400, false);
+            return Resp('', __('messages.notfound'), 200, false);
         }
     }
     public function send_otp()
@@ -138,7 +138,7 @@ class DBUsersRepository implements UsersRepositoryinterface
 
         $user_id = Auth::user()->id;
         $address = UserAddress::where('user_id', $user_id)->get();
-    
+
         if ($address != null) {
             return Resp(AddressResource::collection($address), __('messages.success'), 200, true);
         }

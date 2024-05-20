@@ -18,13 +18,6 @@ use MapsProcessing;
     {
         $this->userRepositry = $userRepositry;
     }
-    public function calc(Request $r)
-    {
-        $response=  distancematrix(($r->lat1.','.$r->long1),($r->lat2.','.$r->long2));
-
-            return $response ;
-    }
-
     public function signup(SignUp $request) {
        return $this->userRepositry->signup();
     }

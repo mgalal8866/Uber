@@ -29,28 +29,12 @@ trait ImageProcessing
         if ($folder2 != null) {
             $path =  $path . '/' .  $folder2 . '/';
         }
-        
+
         if (File::exists($path.$filename)) {
             File::delete($path.$filename);
         }
     }
-    public function get_mime($mime)
-    {
-        if ($mime == 'image/png')
-            $extension = '.png';
-        elseif ($mime == 'image/jpeg')
-            $extension = '.jpg';
-        elseif ($mime == 'image/gif')
-            $extension = '.gif';
-        elseif ($mime == 'image/svg+xml')
-            $extension = '.svg';
-        elseif ($mime == 'image/tiff')
-            $extension = '.tiff';
-        elseif ($mime == 'image/webp')
-            $extension = '.webp';
-
-        return $extension;
-    }
+   
     public function saveImage($image, $id, $folder, $folder2 = null)
     {
         $manager = new ImageManager(new Driver());
