@@ -58,6 +58,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Otp::class);
     }
+    public function myservice()
+    {
+        return $this->hasMany(MyServices::class);
+    }
+    public function driver()
+    {
+        return $this->hasOne(Driver::class);
+    }
     public function address()
     {
         return $this->hasMany(UserAddress::class);
