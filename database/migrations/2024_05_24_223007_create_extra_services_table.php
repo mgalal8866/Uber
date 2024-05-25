@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('extra_services', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->boolean('isuser')->default(0)->comment('1=driver  0=user');
+            $table->boolean('isuser')->nullable()->comment('1=driver  0=user');
             $table->boolean('active')->default(0)->comment('0=active  1=unactive');
             $table->timestamps();
         });

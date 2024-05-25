@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\AddressResource;
 use App\Http\Resources\CreditResource;
+use App\Http\Resources\CreditResourceCollection;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositoryinterface\CreditRepositoryinterface;
 
@@ -35,9 +36,12 @@ class DBCreditRepository implements CreditRepositoryinterface
     public function credit_get()
     {
         $id = Auth::user()->id;
+        $data['wallet'] = Auth::user()->balance;
+
         $credit = $this->model::where(['user_id' =>  $id])->orderby('is_default','desc')->get();
         if ($credit != null) {
-            return Resp( CreditResource::collection($credit), __('messages.success'), 200, true);
+            $data['credit'] = $credit ;
+            return Resp( new CreditResourceCollection($data), __('messages.success'), 200, true);
         }
     }
     public function credit_new()
