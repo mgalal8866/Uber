@@ -15,8 +15,8 @@ class NotificationResource extends JsonResource
 
         return [
             'id'            => $this->id,
-            'title'         => $this->title,
-            'body'          => $this->body,
+            'title'         => $this->title??'',
+            'body'          => $this->body??'',
             'redirect'      => $this->redirect??''
         ];
     }
