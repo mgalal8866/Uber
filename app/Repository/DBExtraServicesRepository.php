@@ -40,8 +40,8 @@ class DBExtraServicesRepository implements ExtraServicesRepositoryinterface
         $user = User::with('driver')->find($id);
         $is_user = ($user->driver ? 1 : 0);
         $services = $this->model::active()->where(['isuser' =>  $is_user, 'isuser' => null])->with(['myservice' => function ($q) use ($id) {
-                $q->where('user_id', $id);
-            }])->get();
+            $q->where('user_id', $id);
+        }])->get();
 
         if ($services != null) {
             return Resp(ServicesResource::collection($services), __('messages.success'), 200, true);
@@ -51,13 +51,14 @@ class DBExtraServicesRepository implements ExtraServicesRepositoryinterface
     {
 
         $user_id = Auth::user()->id;
+        MyServices::where('user_id', $user_id)->delete();
         foreach ($this->request->ids as $id) {
             $myservice = MyServices::updateOrCreate(
                 ['user_id' => $user_id, 'service_id' => $id],
                 ['user_id' => $user_id, 'service_id' => $id]
             );
         }
-        if ( $myservice != null) {
+        if ($myservice != null) {
             return Resp('', __('messages.success'), 200, true);
         }
         return Resp('', 'error', 402, true);
