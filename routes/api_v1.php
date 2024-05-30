@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
+use App\Http\Controllers\Api\V1\TripController;
 use App\Http\Controllers\Api\V1\CreditController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\ExtraServicesController;
@@ -25,6 +26,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('services', [ExtraServicesController::class, 'services']);
         Route::post('service/choose', [ExtraServicesController::class, 'services_choose']);
         Route::get('notifiction', [NotificationController::class, 'notifi_get']);
+
+    });
+    Route::prefix('trip')->group(function () {
+
+        Route::post('create', [TripController::class, 'create']);
+
 
     });
 });

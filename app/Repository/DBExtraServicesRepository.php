@@ -49,7 +49,6 @@ class DBExtraServicesRepository implements ExtraServicesRepositoryinterface
     }
     public function extra_services_choose()
     {
-
         $user_id = Auth::user()->id;
         MyServices::where('user_id', $user_id)->delete();
         foreach ($this->request->ids as $id) {
