@@ -14,9 +14,12 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
 
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('category_id')->nullable()->references('id')->on('category_cars')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('charge_km');
+            $table->string('charge_min');
             $table->string('year')->nullable();
             $table->string('color')->nullable();
             $table->string('model')->nullable();

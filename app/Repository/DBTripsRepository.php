@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Http\Resources\CategoryResource;
+use App\Models\CategoryCar;
 use App\Models\Trip;
 use App\Models\User;
 
@@ -31,6 +33,16 @@ class DBTripsRepository implements TripsRepositoryinterface
     }
     public function accept()
     {
+
+    }
+    public function get_price()
+    {
+        $this->request->validate([
+            'origin' => 'required',
+            'destination' => 'required',
+        ]);
+        $category = CategoryCar::active()->get();
+       return CategoryResource::collection($category , $this->request->origin, $this->request->destination);
 
     }
     public function create()

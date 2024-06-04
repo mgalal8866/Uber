@@ -14,13 +14,16 @@ use App\Repositoryinterface\TripsRepositoryinterface;
 class TripController extends Controller
 {
 use MapsProcessing;
-    private $userRepositry;
-    public function __construct(TripsRepositoryinterface $userRepositry)
+    private $tripRepositry;
+    public function __construct(TripsRepositoryinterface $tripRepositry)
     {
-        $this->userRepositry = $userRepositry;
+        $this->tripRepositry = $tripRepositry;
     }
     public function create() {
-       return $this->userRepositry->create();
+       return $this->tripRepositry->create();
+    }
+    public function get_price() {
+       return $this->tripRepositry->get_price();
     }
 
 }

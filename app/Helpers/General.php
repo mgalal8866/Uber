@@ -51,9 +51,9 @@ function Resp($data = null, $msg = null, $status = 200, $statusval = true)
     }
 }
 
-function path($course_id, $folder)
+function path( $folder)
 {
-    $p =  '/files' . '/' . $folder . '/' . $course_id . '/';
+    $p =  '/files' . '/' . $folder ;
     $path = asset($p);
     if (!File::exists($path)) {
         mkdir($path, 0777, true);

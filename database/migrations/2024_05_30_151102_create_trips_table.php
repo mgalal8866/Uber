@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trips', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->foreignIdFor(User::class);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignIdFor(Driver::class)->nullable();

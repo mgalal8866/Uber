@@ -10,6 +10,7 @@ interface TripsRepositoryinterface{
     public function accept();
     public function start();
     public function end();
+    public function get_price();
 
 
 
