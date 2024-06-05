@@ -7,9 +7,10 @@ interface TripsRepositoryinterface{
 
     public function create();
 
-    public function accept();
-    public function start();
-    public function end();
+    public function accept($trip);
+    public function start($trip);
+    public function end($trip);
+    public function location($trip);
     public function get_price();
 
 

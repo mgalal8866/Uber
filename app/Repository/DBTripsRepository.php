@@ -13,11 +13,11 @@ use App\Traits\ImageProcessing;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Repositoryinterface\TripsRepositoryinterface;
-
+use Carbon\Carbon;
 
 class DBTripsRepository implements TripsRepositoryinterface
 {
-    use ImageProcessing,MapsProcessing;
+    use ImageProcessing, MapsProcessing;
 
     protected Model $model;
     protected $request;
@@ -27,14 +27,70 @@ class DBTripsRepository implements TripsRepositoryinterface
         $this->model = $model;
         $this->request = $request;
     }
-    public function start()
+    public function create()
+    {
+        $this->request->validate([
+            'origin' => 'required',
+            'destination' => 'required',
+            'category_id' => 'required'
+        ]);
+
+        $trip = $this->request->user()->trips()->create([
+            'origin'       => $this->request->origin,
+            'destination'  => $this->request->destination,
+            'category_id'  => $this->request->category_id,
+            'services'     => $this->request->services,
+        ]);
+
+        // TripAccepted::dispatch($trip, $trip->user);
+        // return  $this->model;
+        return Resp('', __('messages.success'), 200, true);
+    }
+    public function start($trip)
+    {
+        $trip->update([
+            'is_started' => Carbon::now(),
+        ]);
+        $trip->load('driver.user');
+        return   $trip;
+    }
+    public function accept($trip)
+    {
+        $this->request->validate([
+            'driver_location' => 'required',
+        ]);
+
+        $trip->update([
+            'driver_id' => $this->request->user()->id,
+            'driver_location' => $this->request->driver_location,
+        ]);
+
+        $trip->load('driver.user');
+        return   $trip;
+    }
+    public function end($trip)
     {
 
+        $trip->update([
+            'is_complete' => Carbon::now(),
+        ]);
+        $trip->load('driver.user');
+        return   $trip;
     }
-    public function accept()
+    public function location($trip)
     {
+        $this->request->validate([
+            'driver_location' => 'required',
+        ]);
 
+        $trip->update([
+            'driver_location' => $this->request->driver_location,
+        ]);
+
+        $trip->load('driver.user');
+        return   $trip;
     }
+
     public function get_price()
     {
         $this->request->validate([
@@ -42,30 +98,6 @@ class DBTripsRepository implements TripsRepositoryinterface
             'destination' => 'required',
         ]);
         $category = CategoryCar::active()->get();
-       return CategoryResource::collection($category , $this->request->origin, $this->request->destination);
-
+        return CategoryResource::collection($category, $this->request->origin, $this->request->destination);
     }
-    public function create()
-    {
-        $this->request->validate([
-            'origin' => 'required',
-            'destination' => 'required',
-            'destination_name' => 'required'
-        ]);
-
-        $trip = $this->request->user()->trips()->create( $this->request->only([
-            'origin',
-            'destination',
-            'destination_name'
-        ]));
-
-        // TripAccepted::dispatch($trip, $trip->user);
-        // return  $this->model;
-        return Resp('', __('messages.success'), 200, true);
-    }
-    public function end()
-    {
-
-    }
-
 }

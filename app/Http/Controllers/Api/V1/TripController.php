@@ -8,6 +8,7 @@ use App\Traits\MapsProcessing;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Http\Requests\AddAddressRequest;
+use App\Models\Trip;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 
@@ -21,6 +22,18 @@ use MapsProcessing;
     }
     public function create() {
        return $this->tripRepositry->create();
+    }
+    public function accept(Trip $trip) {
+        return $this->tripRepositry->accept($trip);
+     }
+    public function start(Trip $trip) {
+       return $this->tripRepositry->start($trip);
+    }
+    public function end(Trip $trip) {
+       return $this->tripRepositry->end($trip);
+    }
+    public function location(Trip $trip) {
+       return $this->tripRepositry->location($trip);
     }
     public function get_price() {
        return $this->tripRepositry->get_price();

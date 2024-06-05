@@ -32,6 +32,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('price', [TripController::class, 'get_price']);
         Route::post('create', [TripController::class, 'create']);
+        Route::get('{trip}/start', [TripController::class, 'start']);
+        Route::post('{trip}/accept', [TripController::class, 'accept']);
+        Route::get('{trip}/end', [TripController::class, 'end']);
+        Route::post('{trip}/location', [TripController::class, 'location']);
+
 
 
     });

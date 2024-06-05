@@ -19,10 +19,11 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreignIdFor(Driver::class)->nullable();
             $table->foreign('driver_id')->references('id')->on('users');
-            $table->boolean('is_started')->default(false);
-            $table->boolean('is_complete')->default(false);
+            $table->timestamp('is_started')->nullable();
+            $table->timestamp('is_complete')->nullable();
             $table->json('origin')->nullable();
             $table->json('destination')->nullable();
+            $table->json('services')->nullable();
             $table->string('destination_name')->nullable();
             $table->json('driver_location')->nullable();
             $table->timestamps();
