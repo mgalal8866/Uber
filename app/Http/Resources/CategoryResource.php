@@ -27,7 +27,7 @@ class CategoryResource extends JsonResource
         return [
             'name' => $this->name,
             'image' => $this->imageurl??'',
-            'price' => number_format($price ,2).' - ' . number_format( ($price*1.5),2) . ' ر.س '    ,
+            'price' => number_format($price).' - ' . number_format( ($price*1.5)) . ' ر.س '    ,
             'time' =>  $time . ' / ' . $min
         ];
     }
