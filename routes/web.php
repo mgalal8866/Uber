@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    TripAccepted::dispatch('1');
+    // TripAccepted::dispatch('1');
     return view('welcome');
 });

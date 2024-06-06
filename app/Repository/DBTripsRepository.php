@@ -2,18 +2,19 @@
 
 namespace App\Repository;
 
-use App\Http\Resources\CategoryResource;
-use App\Models\CategoryCar;
+use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\User;
+use App\Events\TripCreated;
 
+use App\Models\CategoryCar;
 use Illuminate\Http\Request;
 use App\Traits\MapsProcessing;
-use App\Traits\ImageProcessing;
 
+use App\Traits\ImageProcessing;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\CategoryResource;
 use App\Repositoryinterface\TripsRepositoryinterface;
-use Carbon\Carbon;
 
 class DBTripsRepository implements TripsRepositoryinterface
 {
@@ -42,8 +43,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'services'     => $this->request->services,
         ]);
 
-        // TripAccepted::dispatch($trip, $trip->user);
-        // return  $this->model;
+        TripCreated::dispatch($trip, $this->request->user());
         return Resp('', __('messages.success'), 200, true);
     }
     public function start($trip)
