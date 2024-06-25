@@ -40,10 +40,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 });
 
-Route::prefix('driver')->middleware(['auth:sanctum'])->group(function () {
+Route::prefix('driver')->group(function () {
     Route::post('registration', [DriverController::class, 'registration']);
 });
 Route::prefix('car')->group(function () {
     Route::get('brands', [CarController::class, 'brands']);
+    Route::get('category', [CarController::class, 'category']);
     Route::get('model', [CarController::class, 'model']);
 });

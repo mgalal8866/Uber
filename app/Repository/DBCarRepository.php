@@ -2,19 +2,22 @@
 
 namespace App\Repository;
 
-use App\Http\Resources\BrandsResource;
 use App\Models\Otp;
 use App\Models\User;
+use App\Models\CarBrand;
 
+use App\Models\CarModel;
+use App\Models\CategoryCar;
 use Illuminate\Http\Request;
+
 use App\Traits\MapsProcessing;
 use App\Traits\ImageProcessing;
-
-use Illuminate\Database\Eloquent\Model;
-use App\Http\Resources\LoginUserResource;
 use App\Http\Resources\ModelResource;
-use App\Models\CarBrand;
-use App\Models\CarModel;
+use App\Http\Resources\BrandsResource;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\LoginUserResource;
+use App\Http\Resources\CategoryDriverResource;
 use App\Repositoryinterface\CarRepositoryinterface;
 
 
@@ -35,8 +38,12 @@ class DBCarRepository implements CarRepositoryinterface
     public function brands()
     {
         $brand =      $this->brand->get();
-
         return Resp(BrandsResource::collection($brand), __('messages.success'), 200, true);
+    }
+    public function category()
+    {
+        $category = CategoryCar::active()->get();
+        return Resp(CategoryDriverResource::collection($category), __('messages.success'), 200, true);
     }
     public function model()
     {

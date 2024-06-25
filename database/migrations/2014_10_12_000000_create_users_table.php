@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('accept_rules')->default(0);
             $table->boolean('is_online')->default(0);
             $table->enum('type', ['driver', 'user'])->default('user');
-            $table->enum('status', ['accept', 'block', 'pending'])->default('pending');
+            $table->enum('status', ['accept', 'block', 'pending'])->default('accept');
 
             $table->timestamps();
         });

@@ -16,7 +16,10 @@ return new class extends Migration
             $table->bigIncrements('id');
 
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('category_id')->nullable()->references('id')->on('category_cars')->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->foreignId('category_id');
+            $table->foreign('category_id')->references('id')->on('category_cars')->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->string('charge_km')->nullable();
             $table->string('charge_min')->nullable();
 
@@ -36,11 +39,13 @@ return new class extends Migration
             $table->string('national_id_doc')->nullable();
             $table->string('driving_license_doc')->nullable();
 
+            $table->timestamp('birth_date')->nullable();
+            $table->string('vehicle_image')->nullable();
             $table->string('vehicle_registration_doc')->nullable();
             $table->string('vehicle_insurance_doc')->nullable();
             $table->string('vehicle_serial_number')->nullable();
 
-
+            $table->enum('status', ['accept', 'block', 'pending'])->default('pending');
             $table->timestamps();
         });
     }

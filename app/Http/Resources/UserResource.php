@@ -23,6 +23,10 @@ class UserResource extends JsonResource
 
         ];
 
+        if ($this->type == 'driver') {
+            $data['status']     = $this->status;
+            $data['is_online']  = $this->is_online;
+        }
         if ($this->token) {
             $data['token'] = $this->token;
         }

@@ -33,10 +33,6 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function registration()
     {
-
-
-        $user = Auth::user();
-
         try {
             $validator = Validator::make($this->request->all(), [
                 'brand_id'                 => 'required|integer',
@@ -50,17 +46,37 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'driving_license_doc'      => 'required|file|mimes:jpeg,png,jpg,pdf',
                 'vehicle_insurance_doc'    => 'required|file|mimes:jpeg,png,jpg,pdf',
                 'vehicle_registration_doc' => 'required|file|mimes:jpeg,png,jpg,pdf',
+                'driver_image'             => 'required|file|mimes:jpeg,png,jpg,pdf',
+                'vehicle_image'            => 'required|file|mimes:jpeg,png,jpg,pdf',
+                'birth_date'               => 'required|date',
             ]);
             DB::beginTransaction();
+            $datauser = [
+                'name'          => $this->request->name,
+                'email'         => $this->request->email ?? null,
+                'phone'         => $this->request->phone,
+                'type'          => 'driver',
+
+            ];
+            $user =  User::create($datauser);
+
+
             $data = $validator->validated();
-            $publicPath = 'documents/' . $user->id;
-            $nationalIdDocName = 'national_id_' . Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
-            $drivingLicenseDocName = 'driving_license_' . Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
-            $vehicleInsuranceDocName = 'vehicle_insurance_' . Str::random(10) . '.' . $data['vehicle_insurance_doc']->getClientOriginalExtension();
-            $vehicleRegistrationDocName = 'vehicle_registration_' . Str::random(10) . '.' . $data['vehicle_registration_doc']->getClientOriginalExtension();
+            $publicPath                  = 'documents/' . $user->id;
+            $nationalIdDocName           =   Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
+            $drivingLicenseDocName       =   Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
+            $vehicleInsuranceDocName     =   Str::random(10) . '.' . $data['vehicle_insurance_doc']->getClientOriginalExtension();
+            $vehicleRegistrationDocName  =   Str::random(10) . '.' . $data['vehicle_registration_doc']->getClientOriginalExtension();
+            $driver_image                =   Str::random(10) . '.' . $data['driver_image']->getClientOriginalExtension();
+            $vehicle_image               =   Str::random(10) . '.' . $data['vehicle_image']->getClientOriginalExtension();
+
+
+            $user->image =  $data['driver_image']->storeAs('public/' . $publicPath, $driver_image);
+            $user->save();
 
             Driver::create([
                 'user_id'                  => $user->id,
+                'birth_date'               => $data['birth_date'],
                 'brand_id'                 => $data['brand_id'],
                 'model_id'                 => $data['model_id'],
                 'color'                    => $data['color'],
@@ -71,8 +87,10 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'national_id_doc'          => $data['national_id_doc']->storeAs('public/' . $publicPath, $nationalIdDocName),
                 'driving_license_doc'      => $data['driving_license_doc']->storeAs('public/' . $publicPath, $drivingLicenseDocName),
                 'vehicle_insurance_doc'    => $data['vehicle_insurance_doc']->storeAs('public/' . $publicPath, $vehicleInsuranceDocName),
-                'vehicle_registration_doc' => $data['vehicle_registration_doc']->storeAs('public/' . $publicPath, $vehicleRegistrationDocName),
+                'vehicle_registration_doc' => $data['vehicle_registration_doc']->storeAs('public/' . $vehicle_image, $vehicleRegistrationDocName),
+                'vehicle_image'            => $data['vehicle_image']->storeAs('public/' . $publicPath, $vehicleRegistrationDocName),
             ]);
+
 
             DB::commit();
             return Resp([], __('messages.success'), 200, true);

@@ -27,6 +27,9 @@ use MapsProcessing;
     public function model() {
        return $this->carRepositry->model();
     }
+    public function category() {
+       return $this->carRepositry->category();
+    }
 
 
 }
