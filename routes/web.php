@@ -16,42 +16,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
 Route::get('/', function () {
     // TripAccepted::dispatch('1');
-    $locations = [
-        [
-            'latitude' => '31.260262',
-            'longitude' => '29.988416',
-            'name' => 'loc1',
-            'icon' => 'http://public.test/files/woman.png',
-            'size_w' => 30,
-            'size_h' => 40
-        ],
-        [
-            'latitude' => '31.247963',
-            'longitude' => '29.967503',
-            'name' => 'loc1',
-            'icon' => 'http://public.test/files/1.webp'
-        ],
+    // $locations = [
+    //     [
+    //         'latitude' => '31.260262',
+    //         'longitude' => '29.988416',
+    //         'name' => 'loc1',
+    //         'icon' => 'http://public.test/files/woman.png',
+    //         'size_w' => 30,
+    //         'size_h' => 40
+    //     ],
+    //     [
+    //         'latitude' => '31.247963',
+    //         'longitude' => '29.967503',
+    //         'name' => 'loc1',
+    //         'icon' => 'http://public.test/files/1.webp'
+    //     ],
 
 
-        [
-            'latitude' => '31.266235',
-            'longitude' => '29.989349',
-            'name' => 'loc2',
-            'icon' => 'http://public.test/files/1.webp'
-        ]
-    ];
+    //     [
+    //         'latitude' => '31.266235',
+    //         'longitude' => '29.989349',
+    //         'name' => 'loc2',
+    //         'icon' => 'http://public.test/files/1.webp'
+    //     ]
+    // ];
 
-    //  $locations = Trip::take(5)->get();
-    $locations = findNearbyDrivers('31.252717', '30.007483' );
+    // //  $locations = Trip::take(5)->get();
+    // $locations = findNearbyDrivers('31.252717', '30.007483' );
 
     return view('welcome', compact('locations'));
 });
 
 Route::get('/qa1', function () {
-   return findNearbyDrivers('31.252717', '30.007483' );
-
+    return findNearbyDrivers('31.252717', '30.007483');
 });
 Route::get('/qa', function () {
     function calculateDistance($lat1, $lng1, $lat2, $lng2)
@@ -86,7 +88,7 @@ Route::get('/qa', function () {
     //         'icon' => 'http://public.test/files/1.webp'
     //     ]
     // ];
-    $locations = Trip::take(190)->get()->toarray()   ;
+    $locations = Trip::take(190)->get()->toarray();
     // $locations = Trip::where('id', 1)->get()->toarray();
 
     function getDistancesFromGoogleMaps($startLat, $startLng, $locations)
