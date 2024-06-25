@@ -4,8 +4,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
+use App\Http\Controllers\Api\V1\CarController;
 use App\Http\Controllers\Api\V1\TripController;
 use App\Http\Controllers\Api\V1\CreditController;
+use App\Http\Controllers\Api\V1\DriverController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\ExtraServicesController;
 use App\Http\Controllers\Api\V1\AuthenticationController;
@@ -26,7 +28,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('services', [ExtraServicesController::class, 'services']);
         Route::post('service/choose', [ExtraServicesController::class, 'services_choose']);
         Route::get('notifiction', [NotificationController::class, 'notifi_get']);
-
     });
     Route::prefix('trip')->group(function () {
 
@@ -36,8 +37,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('{trip}/accept', [TripController::class, 'accept']);
         Route::get('{trip}/end', [TripController::class, 'end']);
         Route::post('{trip}/location', [TripController::class, 'location']);
-
-
-
     });
+});
+
+Route::prefix('driver')->middleware(['auth:sanctum'])->group(function () {
+    Route::post('registration', [DriverController::class, 'registration']);
+});
+Route::prefix('car')->group(function () {
+    Route::get('brands', [CarController::class, 'brands']);
+    Route::get('model', [CarController::class, 'model']);
 });

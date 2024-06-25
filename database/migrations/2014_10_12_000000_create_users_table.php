@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->decimal('balance',8,2)->default(0);
-            $table->string('live_lat')->default(0);
-            $table->string('live_long')->default(0);
+            $table->string('lat')->default(0);
+            $table->string('long')->default(0);
             $table->boolean('accept_rules')->default(0);
-            // $table->rememberToken();
+            $table->boolean('is_online')->default(0);
+            $table->enum('type', ['driver', 'user'])->default('user');
+            $table->enum('status', ['accept', 'block', 'pending'])->default('user');
+
             $table->timestamps();
         });
     }

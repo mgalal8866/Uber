@@ -16,15 +16,31 @@ return new class extends Migration
             $table->bigIncrements('id');
 
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('category_id')->nullable()->references('id')->on('category_cars')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('charge_km');
-            $table->string('charge_min');
-            $table->string('year')->nullable();
-            $table->string('color')->nullable();
-            $table->string('model')->nullable();
-            $table->string('number')->nullable();
-            $table->json('license_files')->nullable();
+            $table->string('charge_km')->nullable();
+            $table->string('charge_min')->nullable();
+
+            $table->foreignId('brand_id');
+            $table->foreign('brand_id')->references('id')->on('car_brands')->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->foreignId('model_id');
+            $table->foreign('model_id')->references('id')->on('car_models')->cascadeOnDelete()->cascadeOnUpdate();
+
+            $table->string('color', 15);
+
+            $table->year('release_year');
+
+            $table->string('passengers_number')->nullable();
+
+            $table->string('national_id_number')->nullable();
+            $table->string('national_id_doc')->nullable();
+            $table->string('driving_license_doc')->nullable();
+
+            $table->string('vehicle_registration_doc')->nullable();
+            $table->string('vehicle_insurance_doc')->nullable();
+            $table->string('vehicle_serial_number')->nullable();
+
+
             $table->timestamps();
         });
     }

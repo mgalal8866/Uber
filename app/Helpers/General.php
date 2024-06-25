@@ -1,9 +1,29 @@
 <?php
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+
+if (!function_exists('findNearbyDrivers')) {
+    function findNearbyDrivers($latitude, $longitude, $radius = 2)
+    {
+        $haversine = "(6371 * acos(cos(radians($latitude))
+        * cos(radians(lat))
+        * cos(radians(`long`)
+        - radians($longitude))
+        + sin(radians($latitude))
+        * sin(radians(lat))))";
+
+
+
+        return DB::table('users')
+            ->select('id','lat','long', DB::raw("{$haversine} AS distance"))
+            ->having('distance', '<', $radius)
+            ->get();
+    }
+}
 
 if (!function_exists('distancematrix')) {
     function distancematrix($origin, $destination)
@@ -51,9 +71,9 @@ function Resp($data = null, $msg = null, $status = 200, $statusval = true)
     }
 }
 
-function path( $folder)
+function path($folder)
 {
-    $p =  '/files' . '/' . $folder ;
+    $p =  '/files' . '/' . $folder;
     $path = asset($p);
     if (!File::exists($path)) {
         mkdir($path, 0777, true);
