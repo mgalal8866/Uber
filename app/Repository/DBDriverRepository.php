@@ -6,16 +6,17 @@ namespace App\Repository;
 use App\Models\User;
 use App\Models\Driver;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\MapsProcessing;
+
 use App\Traits\ImageProcessing;
 
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use App\Repositoryinterface\DriverRepositoryinterface;
 use Illuminate\Support\Facades\Validator;
+use App\Repositoryinterface\DriverRepositoryinterface;
 
 class DBDriverRepository implements DriverRepositoryinterface
 {
@@ -35,7 +36,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
         $user = Auth::user();
-       
+
         try {
             $validator = Validator::make($this->request->all(), [
                 'brand_id'                 => 'required|integer',
@@ -52,6 +53,12 @@ class DBDriverRepository implements DriverRepositoryinterface
             ]);
             DB::beginTransaction();
             $data = $validator->validated();
+            $publicPath = 'documents/' . $user->id;
+            $nationalIdDocName = 'national_id_' . Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
+            $drivingLicenseDocName = 'driving_license_' . Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
+            $vehicleInsuranceDocName = 'vehicle_insurance_' . Str::random(10) . '.' . $data['vehicle_insurance_doc']->getClientOriginalExtension();
+            $vehicleRegistrationDocName = 'vehicle_registration_' . Str::random(10) . '.' . $data['vehicle_registration_doc']->getClientOriginalExtension();
+
             Driver::create([
                 'user_id'                  => $user->id,
                 'brand_id'                 => $data['brand_id'],
@@ -61,11 +68,12 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'passengers_number'        => $data['passengers_number'],
                 'national_id_number'       => $data['national_id_number'],
                 'vehicle_serial_number'    => $data['vehicle_serial_number'],
-                'national_id_doc'          => $data['national_id_doc']->store('documents/' . $user->id . '/national_id'),
-                'driving_license_doc'      => $data['driving_license_doc']->store('documents/' . $user->id . '/driving_license'),
-                'vehicle_insurance_doc'    => $data['vehicle_insurance_doc']->store('documents/' . $user->id . '/vehicle_insurance'),
-                'vehicle_registration_doc' => $data['vehicle_registration_doc']->store('documents/' . $user->id . '/vehicle_registration'),
+                'national_id_doc'          => $data['national_id_doc']->storeAs('public/' . $publicPath, $nationalIdDocName),
+                'driving_license_doc'      => $data['driving_license_doc']->storeAs('public/' . $publicPath, $drivingLicenseDocName),
+                'vehicle_insurance_doc'    => $data['vehicle_insurance_doc']->storeAs('public/' . $publicPath, $vehicleInsuranceDocName),
+                'vehicle_registration_doc' => $data['vehicle_registration_doc']->storeAs('public/' . $publicPath, $vehicleRegistrationDocName),
             ]);
+
             DB::commit();
             return Resp([], __('messages.success'), 200, true);
         } catch (\Illuminate\Validation\ValidationException $ex) {
