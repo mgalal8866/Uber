@@ -30,7 +30,7 @@ class UserResource extends JsonResource
         if ($this->type == 'driver' &&  $this->driver) {
             $data['driver']  =   [
                 'driver_status'         => $this->driver->status,
-                'driver_is_online'       => $this->is_online,
+                'driver_is_online'      => $this->is_online,
                 'driver_balance'        => $this->driver->balance ?? '0',
                 'driver_vehicle_image'  => $this->driver->vehicle_image
             ];

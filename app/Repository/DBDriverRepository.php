@@ -55,7 +55,7 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'driver_image'             => 'file|mimes:jpeg,png,jpg,pdf',
                 'vehicle_image'            => 'required|file|mimes:jpeg,png,jpg,pdf',
                 'birth_date'               => 'required|date',
-           
+
             ]);
             DB::beginTransaction();
             $datauser = [
@@ -67,7 +67,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
             $data = $validator->validated();
-            $publicPath                  = 'documents/' . $user->id;
+            $publicPath                  = 'public/documents/' . $user->id;
             $nationalIdDocName           =   Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
             $drivingLicenseDocName       =   Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
             $vehicleInsuranceDocName     =   Str::random(10) . '.' . $data['vehicle_insurance_doc']->getClientOriginalExtension();
@@ -77,11 +77,16 @@ class DBDriverRepository implements DriverRepositoryinterface
 
             $user->type  = 'driver';
             if ($data['driver_image'] != null) {
-                $user->image =  $data['driver_image']->storeAs('public/' . $publicPath, $driver_image);
+                $data['driver_image']->storeAs($publicPath, $driver_image);
+                $user->image = $driver_image;
             }
             $user->save();
-
-            Driver::create([
+            $data['national_id_doc']->storeAs($publicPath, $nationalIdDocName);
+            $data['driving_license_doc']->storeAs($publicPath, $drivingLicenseDocName);
+            $data['vehicle_insurance_doc']->storeAs($publicPath, $vehicleInsuranceDocName);
+            $data['vehicle_registration_doc']->storeAs($publicPath, $vehicleRegistrationDocName);
+            $data['vehicle_image']->storeAs($publicPath, $vehicle_image);
+            Driver::updateOrCreate(['user_id'  => $user->id], [
                 'user_id'                  => $user->id,
                 'birth_date'               => $data['birth_date'],
                 'brand_id'                 => $data['brand_id'],
@@ -92,11 +97,11 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'passengers_number'        => $data['passengers_number'],
                 'national_id_number'       => $data['national_id_number'],
                 'vehicle_serial_number'    => $data['vehicle_serial_number'],
-                'national_id_doc'          => $data['national_id_doc']->storeAs('public/' . $publicPath, $nationalIdDocName),
-                'driving_license_doc'      => $data['driving_license_doc']->storeAs('public/' . $publicPath, $drivingLicenseDocName),
-                'vehicle_insurance_doc'    => $data['vehicle_insurance_doc']->storeAs('public/' . $publicPath, $vehicleInsuranceDocName),
-                'vehicle_registration_doc' => $data['vehicle_registration_doc']->storeAs('public/' . $vehicle_image, $vehicleRegistrationDocName),
-                'vehicle_image'            => $data['vehicle_image']->storeAs('public/' . $publicPath, $vehicleRegistrationDocName),
+                'national_id_doc'          =>  $nationalIdDocName,
+                'driving_license_doc'      =>  $drivingLicenseDocName,
+                'vehicle_insurance_doc'    =>  $vehicleInsuranceDocName,
+                'vehicle_registration_doc' =>  $vehicleRegistrationDocName,
+                'vehicle_image'            =>  $vehicle_image,
             ]);
 
 

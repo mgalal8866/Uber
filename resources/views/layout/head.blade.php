@@ -21,7 +21,7 @@
 
 
       <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/fontawesome.css') }}" />
-
+      <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/tabler-icons.css') }}" />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css')}}" class="template-customizer-core-css" />
