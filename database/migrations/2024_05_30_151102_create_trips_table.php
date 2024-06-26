@@ -22,7 +22,9 @@ return new class extends Migration
             $table->timestamp('is_started')->nullable();
             $table->timestamp('is_complete')->nullable();
             $table->json('origin')->nullable();
+            $table->text('origin_address')->nullable();
             $table->json('destination')->nullable();
+            $table->text('destination_address')->nullable();
             $table->json('services')->nullable();
             $table->string('destination_name')->nullable();
             $table->json('driver_location')->nullable();
