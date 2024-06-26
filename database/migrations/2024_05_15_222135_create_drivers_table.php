@@ -29,10 +29,12 @@ return new class extends Migration
             $table->foreignId('model_id');
             $table->foreign('model_id')->references('id')->on('car_models')->cascadeOnDelete()->cascadeOnUpdate();
 
+            $table->decimal('balance',8,2)->default(0);
             $table->string('color', 15);
 
             $table->year('release_year');
 
+            $table->string('vehicle_number')->nullable();
             $table->string('passengers_number')->nullable();
 
             $table->string('national_id_number')->nullable();

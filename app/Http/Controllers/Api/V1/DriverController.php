@@ -15,14 +15,22 @@ use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DriverController extends Controller
 {
-use MapsProcessing;
+    use MapsProcessing;
     private $driverRepositry;
     public function __construct(DriverRepositoryinterface $driverRepositry)
     {
         $this->driverRepositry = $driverRepositry;
     }
-    public function registration() {
+    public function registration()
+    {
         return $this->driverRepositry->registration();
-     }
-
+    }
+    public function services()
+    {
+        return $this->driverRepositry->services();
+    }
+    public function status_online()
+    {
+        return $this->driverRepositry->status_online();
+    }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('image')->nullable();
             $table->string('name');
-            $table->string('charge_km');
-            $table->string('charge_min');
+            $table->string('charge_km')->nullable();
+            $table->string('charge_min')->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();
         });

@@ -6,6 +6,8 @@ interface DriverRepositoryinterface{
 
 
     public function registration();
+    public function services();
+    public function status_online();
 
 
 
