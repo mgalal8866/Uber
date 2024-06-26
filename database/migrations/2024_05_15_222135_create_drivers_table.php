@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
 
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('category_cars')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->string('charge_km')->nullable();

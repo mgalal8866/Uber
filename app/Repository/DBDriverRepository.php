@@ -55,7 +55,7 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'driver_image'             => 'file|mimes:jpeg,png,jpg,pdf',
                 'vehicle_image'            => 'required|file|mimes:jpeg,png,jpg,pdf',
                 'birth_date'               => 'required|date',
-                'category_id'              => 'required|exists:category_cars,id',
+           
             ]);
             DB::beginTransaction();
             $datauser = [
@@ -84,7 +84,6 @@ class DBDriverRepository implements DriverRepositoryinterface
             Driver::create([
                 'user_id'                  => $user->id,
                 'birth_date'               => $data['birth_date'],
-                'category_id'              => $data['category_id'],
                 'brand_id'                 => $data['brand_id'],
                 'model_id'                 => $data['model_id'],
                 'color'                    => $data['color'],
