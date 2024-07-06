@@ -3,7 +3,9 @@
 use App\Models\Trip;
 use GuzzleHttp\Client;
 use App\Events\TripAccepted;
+use App\Websockets\SocketHandler;
 use Illuminate\Support\Facades\Route;
+use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +53,7 @@ Route::get('/', function () {
 
     return view('welcome', compact('locations'));
 });
-
+WebSocketsRouter::webSocket('/socket', SocketHandler::class);
 Route::get('/qa1', function () {
     return findNearbyDrivers('31.252717', '30.007483');
 });

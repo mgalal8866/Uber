@@ -17,7 +17,7 @@ use BeyondCode\LaravelWebSockets\Facades\StatisticsLogger;
 use BeyondCode\LaravelWebSockets\Dashboard\DashboardLogger;
 use BeyondCode\LaravelWebSockets\WebSockets\Exceptions\UnknownAppKey;
 
-class UpdateDriverHandler extends BaseSocketHandler  implements MessageComponentInterface
+class SocketHandler extends BaseSocketHandler  implements MessageComponentInterface
 // class UpdateDriverHandler implements MessageComponentInterface
 {
 
