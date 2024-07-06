@@ -15,8 +15,6 @@ use App\Traits\ImageProcessing;
 use App\Http\Resources\ModelResource;
 use App\Http\Resources\BrandsResource;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\LoginUserResource;
 use App\Http\Resources\CategoryDriverResource;
 use App\Repositoryinterface\CarRepositoryinterface;
 
