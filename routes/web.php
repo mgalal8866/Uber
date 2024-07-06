@@ -51,7 +51,7 @@ Route::get('/', function () {
     // //  $locations = Trip::take(5)->get();
     // $locations = findNearbyDrivers('31.252717', '30.007483' );
 
-    return view('welcome', compact('locations'));
+    // return view('welcome', compact('locations'));
 });
 WebSocketsRouter::webSocket('/socket', SocketHandler::class);
 Route::get('/qa1', function () {
