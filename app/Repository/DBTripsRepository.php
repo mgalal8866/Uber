@@ -44,7 +44,7 @@ class DBTripsRepository implements TripsRepositoryinterface
         ]);
 
         TripCreated::dispatch($trip, $this->request->user());
-        return Resp('', __('messages.success'), 200, true);
+        return Resp($trip, __('messages.success'), 200, true);
     }
     public function start($trip)
     {
