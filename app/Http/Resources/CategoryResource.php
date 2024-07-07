@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
@@ -21,6 +23,10 @@ class CategoryResource extends JsonResource
         $price = ($this->charge_km * $result['km'] )+($this->charge_min * $result['min'] ) + 4 ;
         $time = Carbon::now()->addMinutes($result['min'])->translatedFormat('H:i A');
         $min =  number_format($result['min'] ) .' دقائق ' ;
+        $user =     User::whereHas('credit',function($q){
+            $q->where('is_default',1);
+        })->find( Auth::user()->id);
+
         // }
         // dd($result);
 
@@ -36,6 +42,7 @@ class CategoryResource extends JsonResource
             'origin_addresses' =>  $response['origin_addresses'][0]??'',
             'destination_location' => $request->destination??'',
             'destination_address' =>  $response['destination_addresses'][0]??'',
+            'payment' =>  count($user->credit) > 0 ? __('trans.credit') : __('trans.cash') ,
 
         ];
     }
