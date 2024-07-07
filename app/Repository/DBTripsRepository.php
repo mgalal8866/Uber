@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Events\TripAccepted;
 use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\User;
@@ -14,6 +15,7 @@ use App\Traits\MapsProcessing;
 use App\Traits\ImageProcessing;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\TripResource;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DBTripsRepository implements TripsRepositoryinterface
@@ -31,20 +33,30 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function create()
     {
         $this->request->validate([
-            'origin' => 'required',
-            'destination' => 'required',
-            'category_id' => 'required'
+            'origin_location'       => 'required',
+            'origin_address'        => 'required',
+            'destination_location'  => 'required',
+            'destination_address'   => 'required',
+            'min'                   => 'required',
+            'distance'              => 'required',
+            'suggested_amount'      => 'required',
+            'category_id'           => 'required'
         ]);
 
         $trip = $this->request->user()->trips()->create([
-            'origin'       => $this->request->origin,
-            'destination'  => $this->request->destination,
-            'category_id'  => $this->request->category_id,
-            'services'     => $this->request->services,
+            'origin_location'          => $this->request->origin_location,
+            'origin_address'           => $this->request->origin_address,
+            'destination_location'     => $this->request->destination_location,
+            'destination_address'      => $this->request->destination_address,
+            'category_id'               => $this->request->category_id,
+            'min'                      => $this->request->min,
+            'distance'                 => $this->request->distance,
+            'suggested_amount'         => $this->request->suggested_amount,
+            'status'                   => 'searching',
         ]);
 
-        TripCreated::dispatch($trip, $this->request->user());
-        return Resp($trip, __('messages.success'), 200, true);
+        TripCreated::dispatch($trip);
+        return Resp(new TripResource($trip), __('messages.success'), 200, true);
     }
     public function start($trip)
     {
@@ -66,6 +78,7 @@ class DBTripsRepository implements TripsRepositoryinterface
         ]);
 
         $trip->load('driver.user');
+        TripAccepted::dispatch(new TripResource($trip));
         return   $trip;
     }
     public function end($trip)

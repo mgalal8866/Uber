@@ -18,20 +18,22 @@ class TripAccepted implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $trip;
-    private $user;
 
 
-    public function __construct(Trip $trip, User $user)
+    public function __construct(Trip $trip)
     {
-        $this->trip = $trip;
-        $this->user = $user;
+ $this->trip = $trip;
     }
 
 
     public function broadcastOn(): array
     {
         return [
-            new Channel('passenger_' . $this->user->id)
+            new Channel('trip-' . $this->trip->id)
         ];
+    }
+    public function broadcastAs()
+    {
+        return  'TripAccepted';
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CategoryCar;
 use App\Models\User;
 use App\Models\Driver;
 use Illuminate\Support\Facades\Schema;
@@ -17,17 +18,38 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignIdFor(User::class);
             $table->foreign('user_id')->references('id')->on('users');
+
             $table->foreignIdFor(Driver::class)->nullable();
             $table->foreign('driver_id')->references('id')->on('users');
-            $table->timestamp('is_started')->nullable();
-            $table->timestamp('is_complete')->nullable();
-            $table->json('origin')->nullable();
+
+            $table->foreignIdFor(CategoryCar::class)->nullable();
+            $table->foreign('category_id')->references('id')->on('category_cars');
+            
+            $table->text('origin_location')->nullable();
             $table->text('origin_address')->nullable();
-            $table->json('destination')->nullable();
+
+            $table->text('destination_location')->nullable();
             $table->text('destination_address')->nullable();
+
+            $table->string('distance')->nullable();
+
+            $table->string('min')->nullable();
             $table->json('services')->nullable();
-            $table->string('destination_name')->nullable();
+
             $table->json('driver_location')->nullable();
+
+
+            $table->string('canceled_by')->nullable();
+            $table->json('comment_driver')->nullable();
+            $table->json('comment_user')->nullable();
+
+            $table->decimal('amount',8,2)->nullable();
+            $table->timestamp('is_searching')->nullable();
+            $table->timestamp('is_accepted')->nullable();
+            $table->timestamp('is_started')->nullable();
+            $table->timestamp('is_completed')->nullable();
+            $table->timestamp('is_cancel')->nullable();
+            $table->enum('status',['searching','accepted','started','completed','canceled'])->nullable();
             $table->timestamps();
         });
     }

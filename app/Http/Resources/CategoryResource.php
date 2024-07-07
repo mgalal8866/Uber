@@ -35,6 +35,7 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'image' => $this->imageurl??'',
             'price' => number_format($price).' - ' . number_format( ($price*1.5)) . ' ر.س '    ,
+            'price_int' => number_format($price).',' . number_format( ($price*1.5))  ,
             'time' =>  $time . ' / ' . $min,
             'time_int' =>  $result['min']??'' ,
             'km_int' =>  $result['km']??'',

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\TripResource;
 use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
@@ -18,28 +19,21 @@ class TripCreated implements ShouldBroadcast
 
 
     public $trip;
-    private $user;
-
-    /**
-     * Create a new event instance.
-     */
-    public function __construct(Trip $trip, User $user)
+    public function __construct(Trip $trip)
     {
         $this->trip = $trip;
-        $this->user = $user;
     }
 
 
     public function broadcastOn(): array
     {
         return [
-               new Channel('drivers')
+            new Channel('drivers')
         ];
     }
     public function broadcastWith()
     {
-        // return  $this->message;
-        return ( $this->trip)->toArray();
+        return (new TripResource($this->trip))->toArray(request());
     }
     public function broadcastAs()
     {
