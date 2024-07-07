@@ -32,7 +32,7 @@ class CategoryResource extends JsonResource
             'time' =>  $time . ' / ' . $min,
             'time_int' =>  $result['min']??'' ,
             'km_int' =>  $result['km']??'',
-            'origin_addresses' =>  $response['destination_addresses']??'',
+            'origin_addresses' =>  $response??'',
             'destination_address' =>  $response['destination_addresses']??'',
 
         ];
