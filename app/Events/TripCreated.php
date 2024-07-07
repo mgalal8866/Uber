@@ -36,4 +36,13 @@ class TripCreated implements ShouldBroadcast
                new Channel('drivers')
         ];
     }
+    public function broadcastWith()
+    {
+        // return  $this->message;
+        return ( $this->trip)->toArray();
+    }
+    public function broadcastAs()
+    {
+        return  'drivers1';
+    }
 }
