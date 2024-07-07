@@ -42,7 +42,7 @@ class CategoryResource extends JsonResource
             'origin_addresses' =>  $response['origin_addresses'][0]??'',
             'destination_location' => $request->destination??'',
             'destination_address' =>  $response['destination_addresses'][0]??'',
-            'payment' =>  count($user->credit) > 0 ? __('trans.credit') : __('trans.cash') ,
+            'payment' =>  $user !=null? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')): __('trans.cash') ,
 
         ];
     }
