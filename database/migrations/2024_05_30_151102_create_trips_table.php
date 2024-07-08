@@ -44,7 +44,8 @@ return new class extends Migration
             $table->json('comment_driver')->nullable();
             $table->json('comment_user')->nullable();
 
-            $table->decimal('amount',8,2)->nullable();
+            $table->decimal('final_amount',8,2)->nullable();
+            $table->decimal('suggested_amount',8,2)->nullable();
             $table->timestamp('is_searching')->nullable();
             $table->timestamp('is_accepted')->nullable();
             $table->timestamp('is_started')->nullable();
