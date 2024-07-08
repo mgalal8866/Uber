@@ -655,6 +655,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\UpdateClientRequestStream' => __DIR__ . '/../..' . '/app/Console/Commands/UpdateClientRequestStream.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Message' => __DIR__ . '/../..' . '/app/Events/Message.php',
         'App\\Events\\TripAccepted' => __DIR__ . '/../..' . '/app/Events/TripAccepted.php',

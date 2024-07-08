@@ -174,7 +174,6 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
                 }
             } catch (\InvalidArgumentException $exception) {
                 $this->closeError($exception);
-
                 return;
             }
 
@@ -252,26 +251,15 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
     }
 
     /** @internal */
-    // public function closeError(\Exception $error)
-    // {
-    //     if (self::STATE_END <= $this->state) {
-    //         return;
-    //     }
-    //     $this->emit('error', array($error));
-    //     $this->close();
-    // }
-    public function closeError($error)
+    public function closeError(\Exception $error)
     {
-        if ($error instanceof \Error) {
-            return   new \Exception($error->getMessage(), $error->getCode(), $error);
-        }
-
         if (self::STATE_END <= $this->state) {
             return;
         }
         $this->emit('error', array($error));
         $this->close();
     }
+
     public function close()
     {
         if (self::STATE_END <= $this->state) {

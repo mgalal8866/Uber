@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\UpdateClientRequestStream' => $baseDir . '/app/Console/Commands/UpdateClientRequestStream.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Events\\Message' => $baseDir . '/app/Events/Message.php',
     'App\\Events\\TripAccepted' => $baseDir . '/app/Events/TripAccepted.php',
