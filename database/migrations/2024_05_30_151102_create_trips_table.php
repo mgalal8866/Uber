@@ -22,9 +22,10 @@ return new class extends Migration
             $table->foreignIdFor(Driver::class)->nullable();
             $table->foreign('driver_id')->references('id')->on('users');
 
-            $table->foreignIdFor(CategoryCar::class)->nullable();
-            $table->foreign('category_id')->references('id')->on('category_cars');
-            
+            // $table->foreignIdFor(CategoryCar::class)->nullable();
+            // $table->integer('category_id')->references('id')->on('category_cars');
+            $table->integer('category_id')->nullable();
+
             $table->text('origin_location')->nullable();
             $table->text('origin_address')->nullable();
 
