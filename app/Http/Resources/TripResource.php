@@ -15,16 +15,16 @@ class TripResource extends JsonResource
 
         return [
             'trip_id'                  => $this->id,
-            'origin_location'          => $this->request->origin_location,
-            'origin_address'           => $this->request->origin_address,
+            'origin_location'          => $this->origin_location,
+            'origin_address'           => $this->origin_address,
 
-            'destination_location'     => $this->request->destination_location,
-            'destination_address'      => $this->request->destination_address,
+            'destination_location'     => $this->destination_location,
+            'destination_address'      => $this->destination_address,
 
-            'distance'                 => $this->request->distance,
-            'min'                      => $this->request->min,
-            'suggested_amount'         => $this->request->suggested_amount,
-            'final_amount'             => $this->request->final_amount,
+            'distance'                 => $this->distance,
+            'min'                      => $this->min,
+            'suggested_amount'         => $this->suggested_amount,
+            'final_amount'             => $this->final_amount,
 
             'status'                   => 'searching',
 
