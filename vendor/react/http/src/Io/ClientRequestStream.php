@@ -263,7 +263,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
     public function closeError($error)
     {
         if ($error instanceof \Error) {
-            $error = new \Exception($error->getMessage(), $error->getCode(), $error);
+            return   new \Exception($error->getMessage(), $error->getCode(), $error);
         }
 
         if (self::STATE_END <= $this->state) {
