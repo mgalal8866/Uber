@@ -3,7 +3,11 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
         'reference' => '6f1aec102955f7811f5eb471f4e06b76580b2573',
+=======
+        'reference' => '850c2afe043cf83153e074c9ba8f3493583b874b',
+>>>>>>> 6f1aec102955f7811f5eb471f4e06b76580b2573
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -454,7 +458,11 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => '6f1aec102955f7811f5eb471f4e06b76580b2573',
+=======
+            'reference' => '850c2afe043cf83153e074c9ba8f3493583b874b',
+>>>>>>> 6f1aec102955f7811f5eb471f4e06b76580b2573
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -984,9 +992,9 @@
             'dev_requirement' => false,
         ),
         'react/promise' => array(
-            'pretty_version' => 'v3.2.0',
-            'version' => '3.2.0.0',
-            'reference' => '8a164643313c71354582dc850b42b33fa12a4b63',
+            'pretty_version' => 'v2.7.0',
+            'version' => '2.7.0.0',
+            'reference' => 'f4edc2581617431aea50430749db55cc3fc031b3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../react/promise',
             'aliases' => array(),
