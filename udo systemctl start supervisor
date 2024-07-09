@@ -1,0 +1,19 @@
+○ supervisor.service - Supervisor process control system for UNIX
+     Loaded: loaded (/lib/systemd/system/supervisor.service; enabled; vendor preset: enabled)
+     Active: inactive (dead) since Sun 2024-07-07 00:02:53 UTC; 17s ago
+       Docs: http://supervisord.org
+    Process: 340637 ExecStart=/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf (code=exited, status=0/SUCCESS)
+    Process: 344016 ExecStop=/usr/bin/supervisorctl $OPTIONS shutdown (code=exited, status=0/SUCCESS)
+   Main PID: 340637 (code=exited, status=0/SUCCESS)
+        CPU: 1.966s
+
+Jul 06 23:54:17 srv538996 supervisord[340637]: 2024-07-06 23:54:17,690 INFO success: worker entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+Jul 07 00:02:51 srv538996 systemd[1]: Stopping Supervisor process control system for UNIX...
+Jul 07 00:02:51 srv538996 supervisord[340637]: 2024-07-07 00:02:51,749 INFO waiting for websockets, worker to die
+Jul 07 00:02:51 srv538996 supervisorctl[344016]: Shut down
+Jul 07 00:02:52 srv538996 supervisord[340637]: 2024-07-07 00:02:52,771 INFO stopped: worker (exit status 0)
+Jul 07 00:02:52 srv538996 supervisord[340637]: 2024-07-07 00:02:52,779 WARN received SIGTERM indicating exit request
+Jul 07 00:02:53 srv538996 supervisord[340637]: 2024-07-07 00:02:53,781 INFO stopped: websockets (terminated by SIGTERM)
+Jul 07 00:02:53 srv538996 systemd[1]: supervisor.service: Deactivated successfully.
+Jul 07 00:02:53 srv538996 systemd[1]: Stopped Supervisor process control system for UNIX.
+Jul 07 00:02:53 srv538996 systemd[1]: supervisor.service: Consumed 1.966s CPU time.
