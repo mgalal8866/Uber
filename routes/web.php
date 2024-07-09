@@ -17,7 +17,17 @@ use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/restart-supervisor', function () {
+    $output = [];
+    $returnVar = null;
+    exec('sudo systemctl restart supervisor', $output, $returnVar);
 
+    if ($returnVar !== 0) {
+        return response()->json(['status' => 'error', 'message' => 'Failed to restart supervisor', 'output' => $output], 500);
+    }
+
+    return response()->json(['status' => 'success', 'message' => 'Supervisor restarted successfully', 'output' => $output]);
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 });
