@@ -23,7 +23,7 @@ class UpdateClientRequestStream extends Command
         // Define the old method pattern and the new method code
         $oldMethodPattern = '/public function closeError\s*\(\s*\\\\Exception\s*\$error\s*\)\s*\{[^}]*\}/m';
         $newMethod = <<<'EOD'
-/** @internal */
+ 
 public function closeError($error)
 {
     if ($error instanceof \Error) {
@@ -33,9 +33,7 @@ public function closeError($error)
     if (self::STATE_END <= $this->state) {
         return;
     }
-    $this->emit('error', array($error));
-    $this->close();
-}
+
 EOD;
 
         // Check if the old method exists
