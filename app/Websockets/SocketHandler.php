@@ -64,7 +64,7 @@ class SocketHandler extends BaseSocketHandler  implements MessageComponentInterf
             var_dump($connection->httpRequest->getHeader('Authorization'));
             $user =  User::findToken($connection->httpRequest->getHeader('Authorization')[0]);
             if ($user != null) {
-                $user->update(['latitude' => $payload['lat'], 'longitude' => $payload['long']]);
+                $user->update(['lat' => $payload['lat'], 'long' => $payload['long']]);
                 $connection->send(json_encode(['status' => 'success']));
                 Message::dispatch($payload);
             } else {
