@@ -2,6 +2,8 @@
 
 namespace React\Promise;
 
+use React\Promise\PromisorInterface;
+
 class Deferred implements PromisorInterface
 {
     private $promise;
