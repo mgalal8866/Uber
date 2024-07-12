@@ -83,10 +83,10 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function end($trip)
     {
         $trip->update([
-            'is_complete' => Carbon::now(),
+            'is_completed' => Carbon::now(),
             'status'     => 'completed',
         ]);
-        $trip->load('driver.user');
+        $trip->load(['driver.user','driver.driver']);
         TripEnded::dispatch(new TripResource($trip));
         return   $trip;
     }
