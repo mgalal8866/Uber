@@ -87,7 +87,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'status'     => 'completed',
         ]);
         $trip->load(['driver.user','driver.driver']);
-        TripEnded::dispatch(new TripResource($trip));
+        TripEnded::dispatch($trip);
         return   $trip;
     }
     public function location($trip)
