@@ -13,6 +13,10 @@ interface TripsRepositoryinterface{
     public function location($trip);
     public function get_price();
 
+    public function driver_trips($status);
+    public function user_trips($status);
+
+
 
 
 

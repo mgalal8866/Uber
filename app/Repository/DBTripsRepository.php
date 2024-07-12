@@ -121,4 +121,14 @@ class DBTripsRepository implements TripsRepositoryinterface
         $category = CategoryCar::active()->get();
         return CategoryResource::collection($category, $this->request->origin, $this->request->destination);
     }
+    public function driver_trips($status)
+    {
+        $trip =  $this->model->where(['driver_id' => Auth::user()->id, 'status' => $status])->get();
+        return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
+    }
+    public function user_trips($status)
+    {
+        $trip =  $this->model->where(['user_id' => Auth::user()->id, 'status' => $status])->get();
+        return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
+    }
 }

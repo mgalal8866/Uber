@@ -38,5 +38,10 @@ use MapsProcessing;
     public function get_price() {
        return $this->tripRepositry->get_price();
     }
-
+    public function driver_trips($status) {
+        return $this->tripRepositry->driver_trips($status);
+     }
+     public function user_trips($status) {
+        return $this->tripRepositry->user_trips($status);
+     }
 }
