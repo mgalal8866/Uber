@@ -36,12 +36,13 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host' => 'shaktest.marketopiateam.com',
+                'host' => '127.0.0.1',
                 'encrypted' => true,
                 'port' => '6002',
                 'scheme' => 'https',
                 'debug' => true,
                 'useTLS' => true,
+                'timeout' => 60,
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,
