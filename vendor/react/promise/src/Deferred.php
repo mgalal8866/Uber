@@ -2,7 +2,7 @@
 
 namespace React\Promise;
 
-use GuzzleHttp\Promise\PromisorInterface;
+use React\Promise\PromisorInterface;
 
 class Deferred implements PromisorInterface
 {
