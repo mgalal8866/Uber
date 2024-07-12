@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -77,5 +78,17 @@ class User extends Authenticatable
     public function trips()
     {
         return $this->hasMany(Trip::class);
+    }
+
+    public static function findToken($token)
+    {
+        $token = str_replace('Bearer ', '', $token); // Remove 'Bearer ' prefix if it exists
+        $accessToken = PersonalAccessToken::findToken($token);
+
+        if ($accessToken) {
+            return $accessToken->tokenable; // Assuming tokenable is the User model
+        }
+
+        return null;
     }
 }
