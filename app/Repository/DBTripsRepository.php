@@ -77,7 +77,7 @@ class DBTripsRepository implements TripsRepositoryinterface
         ]);
 
         $trip->load(['driver.user','driver.driver']);
-        TripAccepted::dispatch(new TripResource($trip));
+        TripAccepted::dispatch($trip);
         return   $trip;
     }
     public function end($trip)

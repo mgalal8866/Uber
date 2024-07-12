@@ -5,6 +5,7 @@ namespace App\Events;
 
 use App\Models\Trip;
 use App\Models\User;
+use App\Http\Resources\TripResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -22,7 +23,7 @@ class TripAccepted implements ShouldBroadcast
 
     public function __construct(Trip $trip)
     {
- $this->trip = $trip;
+        $this->trip = $trip;
     }
 
 
@@ -31,6 +32,10 @@ class TripAccepted implements ShouldBroadcast
         return [
             new Channel('trip-' . $this->trip->id)
         ];
+    }
+    public function broadcastWith()
+    {
+        return (new TripResource($this->trip))->toArray(request());
     }
     public function broadcastAs()
     {
