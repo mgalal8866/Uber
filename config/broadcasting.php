@@ -36,7 +36,7 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host' => 'localhost1',
+                'host' => 'localhost',
                 'encrypted' => true,
                 'port' => '6002',
                 'scheme' => 'https',
