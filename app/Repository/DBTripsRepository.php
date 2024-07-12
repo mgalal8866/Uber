@@ -2,20 +2,21 @@
 
 namespace App\Repository;
 
-use App\Events\TripAccepted;
 use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\User;
-use App\Events\TripCreated;
 use App\Events\TripEnded;
+use App\Events\TripCreated;
 use App\Models\CategoryCar;
+use App\Events\TripAccepted;
 use Illuminate\Http\Request;
 use App\Traits\MapsProcessing;
 
 use App\Traits\ImageProcessing;
+use App\Http\Resources\TripResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\TripResource;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DBTripsRepository implements TripsRepositoryinterface
@@ -75,9 +76,9 @@ class DBTripsRepository implements TripsRepositoryinterface
 
 
         $trip->update([
-            'driver_id'  => $this->request->user()->id,
+            'driver_id'   => Auth::user()->id,
             'is_accepted' => Carbon::now(),
-            'status'     => 'accepted',
+            'status'      => 'accepted',
         ]);
 
         $trip->load(['driver.user','driver.driver']);
