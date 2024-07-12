@@ -53,6 +53,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'distance'                 => $this->request->distance,
             'suggested_amount'         => $this->request->suggested_amount,
             'status'                   => 'searching',
+            'is_searching'             => Carbon::now(),
         ]);
 
         TripCreated::dispatch($trip);
@@ -62,9 +63,12 @@ class DBTripsRepository implements TripsRepositoryinterface
     {
         $trip->update([
             'is_started' => Carbon::now(),
+            'status'     => 'started',
         ]);
-        $trip->load('driver.user');
-        return   $trip;
+        $trip->load(['driver.user','driver.driver']);
+        TripAccepted::dispatch($trip);
+        return Resp(new TripResource($trip), __('messages.success'), 200, true);
+
     }
     public function accept($trip)
     {
@@ -78,7 +82,8 @@ class DBTripsRepository implements TripsRepositoryinterface
 
         $trip->load(['driver.user','driver.driver']);
         TripAccepted::dispatch($trip);
-        return   $trip;
+        return Resp(new TripResource($trip), __('messages.success'), 200, true);
+
     }
     public function end($trip)
     {
@@ -88,7 +93,8 @@ class DBTripsRepository implements TripsRepositoryinterface
         ]);
         $trip->load(['driver.user','driver.driver']);
         TripEnded::dispatch($trip);
-        return   $trip;
+        return Resp(new TripResource($trip), __('messages.success'), 200, true);
+
     }
     public function location($trip)
     {
@@ -101,7 +107,8 @@ class DBTripsRepository implements TripsRepositoryinterface
         ]);
 
         $trip->load('driver.user');
-        return   $trip;
+        return Resp(new TripResource($trip), __('messages.success'), 200, true);
+
     }
 
     public function get_price()

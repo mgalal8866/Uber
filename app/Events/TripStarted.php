@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\Models\Trip;
 use App\Models\User;
+use App\Http\Resources\TripResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -17,15 +18,15 @@ class TripStarted implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $trip;
-    private $user;
+
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Trip $trip, User $user)
+    public function __construct(Trip $trip )
     {
         $this->trip = $trip;
-        $this->user = $user;
+
     }
 
     /**
@@ -36,7 +37,15 @@ class TripStarted implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('passenger_' . $this->user->id)
+            new Channel('trip-' . $this->trip->id)
         ];
+    }
+    public function broadcastWith()
+    {
+        return (new TripResource($this->trip))->toArray(request());
+    }
+    public function broadcastAs()
+    {
+        return  'TripStared';
     }
 }
