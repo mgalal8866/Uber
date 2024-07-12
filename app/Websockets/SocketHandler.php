@@ -61,7 +61,7 @@ class SocketHandler extends BaseSocketHandler  implements MessageComponentInterf
         // Example: Update user's location
         if ($body->get('action') === 'updateLocation') {
             $payload = $body->get('payload');
-var_dump($connection->httpRequest->getHeader('Authorization'));
+            var_dump($connection->httpRequest->getHeader('Authorization'));
             $user =  User::findToken($connection->httpRequest->getHeader('Authorization')[0]);
             if ($user) {
                 $user->update(['latitude' => $payload['lat'], 'longitude' => $payload['long']]);
