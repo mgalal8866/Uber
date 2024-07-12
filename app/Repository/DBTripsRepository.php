@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\User;
 use App\Events\TripCreated;
-
+use App\Events\TripEnded;
 use App\Models\CategoryCar;
 use Illuminate\Http\Request;
 use App\Traits\MapsProcessing;
@@ -68,26 +68,26 @@ class DBTripsRepository implements TripsRepositoryinterface
     }
     public function accept($trip)
     {
-        $this->request->validate([
-            'driver_location' => 'required',
-        ]);
+
 
         $trip->update([
-            'driver_id' => $this->request->user()->id,
-            'driver_location' => $this->request->driver_location,
+            'driver_id'  => $this->request->user()->id,
+            'is_accepted' => Carbon::now(),
+            'status'     => 'accepted',
         ]);
 
-        $trip->load('driver.user');
+        $trip->load(['driver.user','driver.driver']);
         TripAccepted::dispatch(new TripResource($trip));
         return   $trip;
     }
     public function end($trip)
     {
-
         $trip->update([
             'is_complete' => Carbon::now(),
+            'status'     => 'completed',
         ]);
         $trip->load('driver.user');
+        TripEnded::dispatch(new TripResource($trip));
         return   $trip;
     }
     public function location($trip)

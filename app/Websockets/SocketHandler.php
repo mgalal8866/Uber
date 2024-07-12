@@ -2,6 +2,7 @@
 
 namespace App\Websockets;
 
+use App\Events\Message;
 use stdClass;
 use Exception;
 use App\Models\Chat;
@@ -64,6 +65,7 @@ class SocketHandler extends BaseSocketHandler  implements MessageComponentInterf
             $user =  User::findToken($connection->httpRequest->getHeader('Authorization')[0]);
             if ($user) {
                 $user->update(['latitude' => $payload['lat'], 'longitude' => $payload['long']]);
+                Message::dispatch($payload);
                 $connection->send(json_encode(['status' => 'success']));
             } else {
                 $connection->send(json_encode(['status' => 'error']));
