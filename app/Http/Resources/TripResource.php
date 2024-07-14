@@ -26,8 +26,9 @@ class TripResource extends JsonResource
             'suggested_amount'         => $this->suggested_amount,
             'final_amount'             => $this->final_amount,
 
-            'status'                   => 'searching',
-
-        ];
+            'status'                   =>  $this->status,
+            'driver'                   => $this->driver??'',
+            'user'                   => $this->user??''
+           ];
     }
 }
