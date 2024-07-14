@@ -81,7 +81,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'status'      => 'accepted',
         ]);
 
-        $trip->load(['driver.user','driver.driver']);
+        $trip->load(['user','driver']);
         TripAccepted::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
 
