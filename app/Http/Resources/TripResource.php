@@ -33,7 +33,7 @@ class TripResource extends JsonResource
             'payment_type'                  => $user !=null? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')): __('trans.cash') ,
             'status'                   => $this->status,
             'driver'                   => $this->driver ? new DriverResource($this->driver):'',
-            'user'                     => $this->user? new UserResource($this->driver):''
+            'user'                     => $this->user? new UserResource($this->user):''
            ];
     }
 }
