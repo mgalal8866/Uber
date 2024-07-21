@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('trip_id');
             $table->integer('user_id');
             $table->morphs('ratingable');
-            $table->text('body');
-            $table->decimal('stars');
+            $table->text('body')->nullable();
+            $table->decimal('stars',2,2)->nullable();
             $table->timestamps();
         });
     }
