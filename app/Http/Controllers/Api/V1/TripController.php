@@ -26,6 +26,9 @@ use MapsProcessing;
     public function accept(Trip $trip) {
         return $this->tripRepositry->accept($trip);
      }
+    public function arrival_to_customer(Trip $trip) {
+        return $this->tripRepositry->arrival_to_customer($trip);
+     }
     public function start(Trip $trip) {
        return $this->tripRepositry->start($trip);
     }

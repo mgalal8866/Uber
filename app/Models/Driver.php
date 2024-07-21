@@ -10,7 +10,22 @@ class Driver extends Model
     use HasFactory;
     protected $guarded = [];
 
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(CarBrand::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(CategoryCar::class);
+    }
+    public function model()
+    {
+        return $this->belongsTo(CarModel::class);
+    }
     public function getVehicleImageAttribute()
     {
         if ($this->vehicle_insurance_doc == null) {

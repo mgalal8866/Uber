@@ -71,6 +71,12 @@ class DBTripsRepository implements TripsRepositoryinterface
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
 
     }
+    public function arrival_to_customer($trip)
+    {
+
+        return Resp('', __('messages.success'), 200, true);
+
+    }
     public function accept($trip)
     {
 
