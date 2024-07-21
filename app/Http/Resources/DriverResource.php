@@ -27,7 +27,7 @@ class DriverResource extends JsonResource
             'model'                    => $this->model->title,
             'lat'                      => $this->user->lat,
             'long'                     => $this->user->long,
-            'rating'                   =>  $this->user->rating? ($this->user->rating->sum('stars')/$this->user->rating->count()):'',
+            // 'rating'                   =>  $this->user->rating? ($this->user->rating->sum('stars')/$this->user->rating->count()):'',
             'ratings'                   =>   $this->user->rating->sum('stars') ,
             'ratingc'                   =>  $this->user->rating->count(),
 
