@@ -39,5 +39,5 @@ class Driver extends Model
 
         return env('APP_URL') . '/storage/documents/' . ($this->user_id??$this->id) . '/' . $this->vehicle_image;
     }
-   
+
 }
