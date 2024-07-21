@@ -15,7 +15,7 @@ class DriverResource extends JsonResource
     {
 
         return [
-            'trip_id'                  => $this->id,
+            'driver_id'                  => $this->id,
             'name'                     => $this->user->name,
             'phone'                    => $this->user->phone,
             'vehicle_image'            => $this->vehicle_imageurl,
@@ -30,6 +30,7 @@ class DriverResource extends JsonResource
             // 'rating'                   =>  $this->user->rating? ($this->user->rating->sum('stars')/$this->user->rating->count()):'',
             'ratings'                   =>   $this->user->rating->sum('stars') ,
             'ratingc'                   =>  $this->user->rating->count(),
+            'rating'                   =>  $this->user->rating,
 
            ];
     }
