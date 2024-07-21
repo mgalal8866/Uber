@@ -17,6 +17,7 @@ use App\Http\Resources\TripResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\CategoryResource;
+use App\Models\Rating;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DBTripsRepository implements TripsRepositoryinterface
@@ -53,7 +54,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'min'                      => $this->request->min,
             'distance'                 => $this->request->distance,
             'suggested_amount'         => $this->request->suggested_amount,
-            'payment_type'              =>(count($this->request->user()->credit) > 0 ?'credit' : 'cash'),
+            'payment_type'              => (count($this->request->user()->credit) > 0 ? 'credit' : 'cash'),
             'status'                   => 'searching',
             'is_searching'             => Carbon::now(),
         ]);
@@ -67,16 +68,14 @@ class DBTripsRepository implements TripsRepositoryinterface
             'is_started' => Carbon::now(),
             'status'     => 'started',
         ]);
-        $trip->load(['driver.user','driver.driver']);
+        $trip->load(['driver.user', 'driver.driver']);
         TripAccepted::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
-
     }
     public function arrival_to_customer($trip)
     {
 
         return Resp('', __('messages.success'), 200, true);
-
     }
     public function accept($trip)
     {
@@ -88,10 +87,23 @@ class DBTripsRepository implements TripsRepositoryinterface
             'status'      => 'accepted',
         ]);
 
-        $trip->load(['user','driver']);
+        $trip->load(['user', 'driver']);
         TripAccepted::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
+    }
+    public function rating($trip)
+    {
 
+        Rating::Create([
+            'trip_id'           => $trip->id,
+            'user_id'           => Auth::user()->id,
+            'ratingable_id'     => $trip->driver_id,
+            'ratingable_type'   => User::class,
+            'body'              => $this->request->body ?? '',
+            'stars'             => $this->request->stars ?? ''
+        ]);
+
+        return Resp('', __('messages.success'), 200, true);
     }
     public function end($trip)
     {
@@ -99,10 +111,9 @@ class DBTripsRepository implements TripsRepositoryinterface
             'is_completed' => Carbon::now(),
             'status'     => 'completed',
         ]);
-        $trip->load(['driver.user','driver.driver']);
+        $trip->load(['driver.user', 'driver.driver']);
         TripEnded::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
-
     }
     public function location($trip)
     {
@@ -116,7 +127,6 @@ class DBTripsRepository implements TripsRepositoryinterface
 
         $trip->load('driver.user');
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
-
     }
 
     public function get_price()
@@ -131,7 +141,7 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function driver_trips($status)
     {
 
-        $trip =  $this->model->where(['driver_id' => Auth::user()->id])->where( 'status' ,'=', $status)->get();
+        $trip =  $this->model->where(['driver_id' => Auth::user()->id])->where('status', '=', $status)->get();
         return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
     }
     public function user_trips($status)

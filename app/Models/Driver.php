@@ -26,6 +26,10 @@ class Driver extends Model
     {
         return $this->belongsTo(CarModel::class);
     }
+    public function rating()
+    {
+        return $this->morphMany(Rating::class, 'ratingable');
+    }
     public function getVehicleImageAttribute()
     {
         if ($this->vehicle_insurance_doc == null) {

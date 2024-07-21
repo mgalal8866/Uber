@@ -79,6 +79,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Trip::class);
     }
+    public function rating()
+    {
+        return $this->morphMany(Rating::class, 'ratingable');
+    }
 
     public static function findToken($token)
     {

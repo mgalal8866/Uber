@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('{trip}/end', [TripController::class, 'end']);
         Route::post('{trip}/location', [TripController::class, 'location']);
         Route::get('driver/{status}', [TripController::class, 'driver_trips']);
+        Route::get('{trip}/rating', [TripController::class, 'rating']);
         Route::get('user/{status}', [TripController::class, 'user_trips']);
     });
 });

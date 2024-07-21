@@ -23,6 +23,9 @@ use MapsProcessing;
     public function create() {
        return $this->tripRepositry->create();
     }
+    public function rating(Trip $trip) {
+        return $this->tripRepositry->rating($trip);
+     }
     public function accept(Trip $trip) {
         return $this->tripRepositry->accept($trip);
      }

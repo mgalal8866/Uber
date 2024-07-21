@@ -28,9 +28,9 @@ class TripResource extends JsonResource
             'distance'                 => $this->distance . 'k.m',
             'min'                      => $this->min,
             'time_arrival'             => Carbon::now()->addMinutes($this->min)->translatedFormat('H:i A'),
-            'suggested_amount'         => $this->suggested_amount . 'ر.س',
+            'suggested_amount'         => $this->suggested_amount . ' ر.س ',
             'final_amount'             => $this->final_amount,
-            'payment_type'                  => $user !=null? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')): __('trans.cash') ,
+            'payment_type'             => $user !=null? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')): __('trans.cash') ,
             'status'                   => $this->status,
             'driver'                   => $this->driver ? new DriverResource($this->driver):'',
             'user'                     => $this->user? new UserResource($this->user):''
