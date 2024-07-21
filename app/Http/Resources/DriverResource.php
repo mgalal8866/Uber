@@ -25,6 +25,8 @@ class DriverResource extends JsonResource
             'category'                 => $this->category?->name??'',
             'brand'                    => $this->brand->title,
             'model'                    => $this->model->title,
+            'lat'                      => $this->user->lat,
+            'long'                     => $this->user->long,
 
            ];
     }
