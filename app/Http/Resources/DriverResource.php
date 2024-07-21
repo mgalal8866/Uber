@@ -22,7 +22,7 @@ class DriverResource extends JsonResource
             'driver_image'             => $this->user->imageurl,
             'vehicle_serial_number'    => $this->vehicle_serial_number,
             'color'                    => $this->color,
-            'category'                 => $this->category?->name,
+            'category'                 => $this->category?->name??'',
             'brand'                    => $this->brand->title,
             'model'                    => $this->model->title,
 
