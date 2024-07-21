@@ -30,14 +30,14 @@ class Driver extends Model
     {
         return $this->morphMany(Rating::class, 'ratingable');
     }
-    public function getVehicleImageAttribute()
+    public function getVehicleImageAttribute($v)
     {
         // if ($this->vehicle_image == null) {
 
         //     return '';
         // }
 
-        return env('APP_URL') . '/storage/documents/' . ($this->user_id??$this->id) . '/' . $this->vehicle_image;
+        return env('APP_URL') . '/storage/documents/' . ($this->user_id??$this->id) . '/' . $this->v;
     }
 
 }
