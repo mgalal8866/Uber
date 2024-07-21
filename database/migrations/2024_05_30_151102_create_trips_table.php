@@ -51,6 +51,8 @@ return new class extends Migration
             $table->timestamp('is_started')->nullable();
             $table->timestamp('is_completed')->nullable();
             $table->timestamp('is_cancel')->nullable();
+            $table->string('payment_transaction')->nullable();
+            $table->enum('payment_type',['cash','credit'])->nullable();
             $table->enum('status',['searching','accepted','started','completed','canceled'])->nullable();
             $table->timestamps();
         });

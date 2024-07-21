@@ -18,7 +18,7 @@ class DriverResource extends JsonResource
             'trip_id'                  => $this->id,
             'name'                     => $this->user->name,
             'phone'                    => $this->user->phone,
-            'vehicle_image'            => $this->vehicle_image,
+            'vehicle_image'            => $this->vehicle_imageurl,
             'driver_image'             => $this->user->imageurl,
             'vehicle_serial_number'    => $this->vehicle_serial_number,
             'color'                    => $this->color,

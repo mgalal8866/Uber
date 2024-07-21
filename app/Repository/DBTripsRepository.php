@@ -53,6 +53,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'min'                      => $this->request->min,
             'distance'                 => $this->request->distance,
             'suggested_amount'         => $this->request->suggested_amount,
+            'payment_type'              =>(count($this->request->user()->credit) > 0 ?'credit' : 'cash'),
             'status'                   => 'searching',
             'is_searching'             => Carbon::now(),
         ]);
