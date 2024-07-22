@@ -18,7 +18,7 @@ class DriverResource extends JsonResource
             'driver_id'                  => $this->id,
             'name'                     => $this->user->name,
             'phone'                    => $this->user->phone,
-            'vehicle_image'            => $this->vehicle_image,
+            'vehicle_image'            => path2('/storage/documents/', $this->user->id).$this->vehicle_image,
             'driver_image'             => $this->user->imageurl,
             'vehicle_serial_number'    => $this->vehicle_serial_number,
             'color'                    => $this->color,

@@ -37,7 +37,7 @@ class Driver extends Model
         //     return '';
         // }
 
-        return env('APP_URL') . '/storage/documents/' . ($this->user_id??$this->id) . '/' .$this->vehicle_image;
+        return path2()env('APP_URL') . '/storage/documents/' . ($this->user_id??$this->id) . '/' .$this->vehicle_image;
     }
 
 }
