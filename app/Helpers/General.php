@@ -89,6 +89,15 @@ function path2($folder,$folder2)
     }
     return  $path . '/';
 }
+function pathstorage($folder,$folder2)
+{
+    $p =   '/' . $folder.'/'.$folder2;
+    $path = asset($p);
+    if (!File::exists($path)) {
+        mkdir($path, 0777, true);
+    }
+    return  $path . '/';
+}
 // function getSetting($key, $default = null)
 // {
 //     $setting = Setting::find($key);
