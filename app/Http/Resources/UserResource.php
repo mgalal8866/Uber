@@ -32,7 +32,7 @@ class UserResource extends JsonResource
                 'driver_status'         => $this->driver->status,
                 'driver_is_online'      => $this->is_online,
                 'driver_balance'        => $this->driver->balance ?? '0',
-                'driver_vehicle_image'  => $this->driver->vehicle_image
+                'driver_vehicle_image'  =>  pathstorage('storage/documents', $this->driver->user_id).$this->driver->vehicle_image
             ];
         }
 
