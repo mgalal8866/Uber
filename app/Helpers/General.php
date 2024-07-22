@@ -80,6 +80,15 @@ function path($folder)
     }
     return  $path . '/';
 }
+function path2($folder,$folder2)
+{
+    $p =  '/files' . '/' . $folder.'/'.$folder2;
+    $path = asset($p);
+    if (!File::exists($path)) {
+        mkdir($path, 0777, true);
+    }
+    return  $path . '/';
+}
 // function getSetting($key, $default = null)
 // {
 //     $setting = Setting::find($key);

@@ -53,7 +53,7 @@ class User extends Authenticatable
 
             return '';
         }
-        return path($this->id,'users')  . $this->image;
+        return path2('users',$this->id)  . $this->image;
     }
     public function otp()
     {
