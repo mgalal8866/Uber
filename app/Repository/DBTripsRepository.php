@@ -111,7 +111,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'is_completed' => Carbon::now(),
             'status'     => 'completed',
         ]);
-        $trip->load(['driver.user', 'driver.driver']);
+        $trip->load(['driver.user', 'driver']);
         TripEnded::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
     }
