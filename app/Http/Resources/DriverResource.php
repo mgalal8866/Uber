@@ -30,7 +30,8 @@ class DriverResource extends JsonResource
             // 'rating'                   =>  $this->user->rating? ($this->user->rating->sum('stars')/$this->user->rating->count()):'',
             // 'ratings'                   =>   $this->user->rating->sum('stars') ,
             // 'ratingc'                   =>  $this->user->rating->count(),
-            'rating'                   =>  $this->user->rating??'5.0',
+            // 'rating'                   =>  $this->user->rating??'5.0',
+            'rating'                   => '5.0',
 
            ];
     }
