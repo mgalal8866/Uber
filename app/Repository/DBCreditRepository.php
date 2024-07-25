@@ -38,16 +38,16 @@ class DBCreditRepository implements CreditRepositoryinterface
         $id = Auth::user()->id;
         $data['wallet'] = Auth::user()->balance;
 
-        $credit = $this->model::where(['user_id' =>  $id])->orderby('is_default','desc')->get();
+        $credit = $this->model::where(['user_id' =>  $id])->orderby('is_default', 'desc')->get();
         if ($credit != null) {
-            $data['credit'] = $credit ;
-            return Resp( new CreditResourceCollection($data), __('messages.success'), 200, true);
+            $data['credit'] = $credit;
+            return Resp(new CreditResourceCollection($data), __('messages.success'), 200, true);
         }
     }
     public function credit_new()
     {
 
-        $user= Auth::user();
+        $user = Auth::user();
 
         $data['user_id'] = $user->id;
         if ($this->request->has('name')) {
@@ -65,14 +65,13 @@ class DBCreditRepository implements CreditRepositoryinterface
         if ($this->request->has('cvc')) {
             $data['cvc'] = $this->request->cvc;
         }
-        if ($this->request->has('is_default')) {
 
-            $data['is_default'] = $this->request->is_default;
-        }
+         $data['is_default'] = 1;
+
         $credit = $this->model::create($data);
 
-            $credit::where(['user_id' =>   $user->id, 'is_default' => 1])->update(['is_default' => 0]);
-     
+        $credit::where(['user_id' =>   $user->id, 'is_default' => 1])->update(['is_default' => 0]);
+
 
         if ($credit != null) {
             return Resp(new CreditResource($credit), __('messages.success_credit_new'), 200, true);
