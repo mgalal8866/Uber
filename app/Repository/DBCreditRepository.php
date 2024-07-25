@@ -66,9 +66,9 @@ class DBCreditRepository implements CreditRepositoryinterface
             $data['cvc'] = $this->request->cvc;
         }
 
-         $data['is_default'] = 1;
+         $data['is_default'] = "1";
 
-         $this->model::where(['user_id' =>   $user->id, 'is_default' => 1])->update(['is_default' => 0]);
+         $this->model::where(['user_id' =>   $user->id, 'is_default' => "1"])->update(['is_default' => "0"]);
         $credit = $this->model::create($data);
 
 
