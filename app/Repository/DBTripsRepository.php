@@ -5,19 +5,20 @@ namespace App\Repository;
 use Carbon\Carbon;
 use App\Models\Trip;
 use App\Models\User;
+use App\Models\Rating;
 use App\Events\TripEnded;
 use App\Events\TripCreated;
 use App\Models\CategoryCar;
 use App\Events\TripAccepted;
 use Illuminate\Http\Request;
-use App\Traits\MapsProcessing;
 
+use App\Traits\MapsProcessing;
 use App\Traits\ImageProcessing;
 use App\Http\Resources\TripResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\TripOldResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\CategoryResource;
-use App\Models\Rating;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DBTripsRepository implements TripsRepositoryinterface
@@ -141,12 +142,12 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function driver_trips($status)
     {
 
-        $trip =  $this->model->where(['user_id' => Auth::user()->id])->where('status', '=', $status)->get();
+        $trip =  $this->model->where(['driver_id' => Auth::user()->id])->where('status', '=', $status)->get();
         return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
     }
     public function user_trips($status)
     {
         $trip =  $this->model->where(['user_id' => Auth::user()->id, 'status' => $status])->get();
-        return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
+        return Resp(TripOldResource::collection($trip), __('messages.success'), 200, true);
     }
 }
