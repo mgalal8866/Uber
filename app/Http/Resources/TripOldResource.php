@@ -19,11 +19,12 @@ class TripOldResource extends JsonResource
         })->find( $this->user->id);
         return [
             'trip_id'                  => $this->id,
+            'date'                      => $this->created_at,
             'origin_address'           => $this->origin_address,
             'destination_address'      => $this->destination_address,
             'distance'                 => $this->distance . 'k.m',
-            'min'                      => $this->min,
-            'final_amount'             => $this->final_amount,
+            'min'                      => number_format($this->min,2),
+            'final_amount'             => $this->final_amount. 'ر.س',
             'payment_type'             => $user !=null? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')): __('trans.cash') ,
             'status'                   => $this->status,
             'driver'                   => $this->driver ? new DriverResource($this->driver):'',
