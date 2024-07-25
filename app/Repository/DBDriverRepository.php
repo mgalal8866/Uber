@@ -27,7 +27,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 {
     use ImageProcessing, MapsProcessing;
 
-    protected Model $user, $driver, $services,$driver_area;
+    protected Model $user, $driver, $services, $driver_area;
     protected $request;
 
     public function __construct(User $user, Driver $driver, ExtraServices $services, DriverArea $driver_area, Request $request)
@@ -152,20 +152,23 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
         ]);
-        $datauser = [
-            'driver_id'   => Auth::user()->id,
-            'lat'         => $this->request->lat ??  '',
-            'long'        => $this->request->long??  '',
-            'area_name'   => $this->request->area_name?? '',
-            'address'     => $this->request->address??  '',
-            'radius'      => $this->request->radius?? '' ,
-        ];
-        $driver_area = $this->driver_area::create($datauser);
-        return Resp(new DriverAreaResource($driver_area), __('messages.success'), 200, true);
+        try {
+            $datauser = $validator->validated();
+            DB::beginTransaction();
+            $datauser['driver_id'] =   Auth::user()->id ;
+            $driver_area = $this->driver_area::create($datauser);
+            DB::commit();
+            return Resp(new DriverAreaResource($driver_area), __('messages.success'), 200, true);
+        } catch (\Illuminate\Validation\ValidationException $ex) {
+            return response()->json(['errors' => $ex->errors()], 422);
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return Resp([], $ex->getMessage(), 404, false);
+        }
     }
     public function get_driver_area()
     {
-        $driver_area = $this->driver_area->where('driver_id'  ,Auth::user()->id)->get();
+        $driver_area = $this->driver_area->where('driver_id', Auth::user()->id)->get();
         return Resp(DriverAreaResource::collection($driver_area), __('messages.success'), 200, true);
     }
 }
