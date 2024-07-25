@@ -47,11 +47,9 @@ class DBCreditRepository implements CreditRepositoryinterface
     public function credit_new()
     {
 
-        $id = Auth::user()->id;
-        if ($this->request->is_default == 1) {
-            $this->model::where(['user_id' =>  $id, 'is_default' => 1])->update(['is_default' => 0]);
-        }
-        $data['user_id'] = $id;
+        $user= Auth::user();
+
+        $data['user_id'] = $user->id;
         if ($this->request->has('name')) {
             $data['name'] = $this->request->name;
         }
@@ -68,10 +66,13 @@ class DBCreditRepository implements CreditRepositoryinterface
             $data['cvc'] = $this->request->cvc;
         }
         if ($this->request->has('is_default')) {
+
             $data['is_default'] = $this->request->is_default;
         }
         $credit = $this->model::create($data);
 
+            $credit::where(['user_id' =>   $user->id, 'is_default' => 1])->update(['is_default' => 0]);
+     
 
         if ($credit != null) {
             return Resp(new CreditResource($credit), __('messages.success_credit_new'), 200, true);
