@@ -141,7 +141,7 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function driver_trips($status)
     {
 
-        $trip =  $this->model->where(['driver_id' => Auth::user()->id])->where('status', '=', $status)->get();
+        $trip =  $this->model->where(['user_id' => Auth::user()->id])->where('status', '=', $status)->get();
         return Resp(TripResource::collection($trip), __('messages.success'), 200, true);
     }
     public function user_trips($status)
