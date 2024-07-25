@@ -149,13 +149,11 @@ class DBDriverRepository implements DriverRepositoryinterface
             'area_name'              => 'required',
             'address'                => 'required',
             'radius'                 => 'required',
-
-
         ]);
         try {
             $datauser = $validator->validated();
             DB::beginTransaction();
-            $datauser['driver_id'] =   Auth::user()->id ;
+            $datauser['driver_id'] =   Auth::user()->id;
             $driver_area = $this->driver_area::create($datauser);
             DB::commit();
             return Resp(new DriverAreaResource($driver_area), __('messages.success'), 200, true);
