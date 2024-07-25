@@ -35,11 +35,12 @@ class DBNotificationRepository implements NotificationRepositoryinterface
     public function my_notification()
     {
         $user_id = Auth::user()->id;
-        
+
         $notifi = $this->model::where(function($query) use ($user_id) {
             $query->where('user_id', $user_id)
                   ->orWhereNull('user_id');
         })->get();
+        
         if ($notifi != null) {
             return Resp(NotificationResource::collection($notifi), __('messages.success'), 200, true);
         }

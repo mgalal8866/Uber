@@ -18,6 +18,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\ServicesResource;
+use App\Models\DriverArea;
 use Illuminate\Support\Facades\Validator;
 use App\Repositoryinterface\DriverRepositoryinterface;
 
@@ -25,13 +26,14 @@ class DBDriverRepository implements DriverRepositoryinterface
 {
     use ImageProcessing, MapsProcessing;
 
-    protected Model $user, $driver, $services;
+    protected Model $user, $driver, $services,$driver_area;
     protected $request;
 
-    public function __construct(User $user, Driver $driver, ExtraServices $services, Request $request)
+    public function __construct(User $user, Driver $driver, ExtraServices $services, DriverArea $driver_area, Request $request)
     {
         $this->user = $user;
         $this->driver = $driver;
+        $this->driver_area = $driver_area;
         $this->services = $services;
         $this->request = $request;
     }
@@ -137,5 +139,19 @@ class DBDriverRepository implements DriverRepositoryinterface
         if ($user != null) {
             return Resp([], __('messages.success'), 200, true);
         }
+    }
+    public function driver_area()
+    {
+
+        $datauser = [
+            'driver_id'   => Auth::user()->id,
+            'lat'         => $this->request->lat ??  '',
+            'long'        => $this->request->long??  '',
+            'area_name'   => $this->request->area_name?? '',
+            'address'     => $this->request->address??  '',
+            'radius'      => $this->request->radius?? '' ,
+        ];
+        $driver_area = $this->driver_area::create($datauser);
+        return Resp($driver_area, __('messages.success'), 200, true);
     }
 }

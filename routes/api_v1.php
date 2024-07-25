@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::prefix('driver')->group(function () {
     Route::post('registration', [DriverController::class, 'registration']);
+    Route::get('area', [DriverController::class, 'area']);
     Route::get('services', [DriverController::class, 'services']);
     Route::get('set/services', [DriverController::class, 'set_services']);
     Route::middleware(['auth:sanctum'])->group(function () {
