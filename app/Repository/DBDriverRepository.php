@@ -6,20 +6,21 @@ namespace App\Repository;
 use App\Models\User;
 use App\Models\Driver;
 
+use App\Models\DriverArea;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+
 use App\Models\ExtraServices;
 
 use App\Traits\MapsProcessing;
-
 use App\Traits\ImageProcessing;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\ServicesResource;
-use App\Models\DriverArea;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\DriverAreaResource;
 use App\Repositoryinterface\DriverRepositoryinterface;
 
 class DBDriverRepository implements DriverRepositoryinterface
@@ -140,7 +141,7 @@ class DBDriverRepository implements DriverRepositoryinterface
             return Resp([], __('messages.success'), 200, true);
         }
     }
-    public function driver_area()
+    public function new_driver_area()
     {
 
         $datauser = [
@@ -152,6 +153,11 @@ class DBDriverRepository implements DriverRepositoryinterface
             'radius'      => $this->request->radius?? '' ,
         ];
         $driver_area = $this->driver_area::create($datauser);
-        return Resp($driver_area, __('messages.success'), 200, true);
+        return Resp(new DriverAreaResource($driver_area), __('messages.success'), 200, true);
+    }
+    public function get_driver_area()
+    {
+        $driver_area = $this->driver_area->where('driver_id'  ,Auth::user()->id)->get();
+        return Resp(DriverAreaResource::collection($driver_area), __('messages.success'), 200, true);
     }
 }

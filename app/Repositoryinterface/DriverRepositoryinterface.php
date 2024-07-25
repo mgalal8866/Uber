@@ -8,7 +8,8 @@ interface DriverRepositoryinterface{
     public function registration();
     public function services();
     public function status_online();
-    public function driver_area();
+    public function new_driver_area();
+    public function get_driver_area();
 
 
 

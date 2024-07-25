@@ -29,9 +29,13 @@ class DriverController extends Controller
     {
         return $this->driverRepositry->services();
     }
-    public function area()
+    public function new_driver_area()
     {
-        return $this->driverRepositry->driver_area();
+        return $this->driverRepositry->new_driver_area();
+    }
+    public function get_driver_area()
+    {
+        return $this->driverRepositry->get_driver_area();
     }
     public function status_online()
     {
