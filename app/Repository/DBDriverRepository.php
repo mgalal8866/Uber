@@ -143,7 +143,15 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function new_driver_area()
     {
+        $validator = Validator::make($this->request->all(), [
+            'lat'                    => 'required',
+            'long'                   => 'required',
+            'area_name'              => 'required',
+            'address'                => 'required',
+            'radius'                 => 'required',
 
+
+        ]);
         $datauser = [
             'driver_id'   => Auth::user()->id,
             'lat'         => $this->request->lat ??  '',
