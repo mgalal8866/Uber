@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TripOldResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\TripOldDriverResource;
 use App\Repositoryinterface\TripsRepositoryinterface;
 
 class DBTripsRepository implements TripsRepositoryinterface
@@ -148,6 +149,6 @@ class DBTripsRepository implements TripsRepositoryinterface
     public function user_trips($status)
     {
         $trip =  $this->model->where(['user_id' => Auth::user()->id, 'status' => $status])->with('driver')->get();
-        return Resp(TripOldResource::collection($trip), __('messages.success'), 200, true);
+        return Resp(TripOldDriverResource::collection($trip), __('messages.success'), 200, true);
     }
 }

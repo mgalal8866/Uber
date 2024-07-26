@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TripOldResource extends JsonResource
+class TripOldDriverResource extends JsonResource
 {
 
 
@@ -27,12 +27,11 @@ class TripOldResource extends JsonResource
             'final_amount'             => $this->final_amount . ' ر.س ',
             'payment_type'             => $user != null ? (count($user->credit) > 0 ? __('trans.credit') : __('trans.cash')) : __('trans.cash'),
             'status'                   => $this->status,
-            'driver'                   => $this->driver ? [
-                'name'                     => $this->driver->user->name,
-                'driver_image'             =>  $this->driver->user->imageurl,
-                'brand'                    => $this->driver->brand->title,
-                'color'                    => $this->color,
-                ] : '',
+            'name'                     => $this->driver->user->name,
+            'driver_image'             =>  $this->driver->user->imageurl,
+             'brand'                    => $this->driver->brand->title,
+             'color'                    => $this->driver->color,
+
             // 'user'                     => $this->user? new UserResource($this->user):''
         ];
     }
