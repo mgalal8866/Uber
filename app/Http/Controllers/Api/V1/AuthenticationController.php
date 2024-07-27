@@ -36,6 +36,10 @@ use MapsProcessing;
     public function address_new(AddAddressRequest $request) {
        return $this->userRepositry->address_new();
     }
+
+    public function addressdelete($id) {
+       return $this->userRepositry->addressdelete($id);
+    }
     public function address() {
        return $this->userRepositry->address();
     }

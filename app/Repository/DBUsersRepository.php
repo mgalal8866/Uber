@@ -73,6 +73,16 @@ class DBUsersRepository implements UsersRepositoryinterface
         Otp::create(['phone' => $this->request->phone, 'otp' => $otp]);
         return Resp('', __('messages.success_send_otp'), 200, true);
     }
+    public function addressdelete($id)
+    {
+       $address =  UserAddress::find($id);
+       if($address == null){
+
+           return Resp('', __('messages.somethingerror'), 404, true);
+       }
+       $address->delete();
+        return Resp('', __('messages.success'), 200, true);
+    }
 
 
 
