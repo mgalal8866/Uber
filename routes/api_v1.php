@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('profile', [AuthenticationController::class, 'profile']);
         Route::post('profile/update', [AuthenticationController::class, 'profile_update']);
         Route::get('address', [AuthenticationController::class, 'address']);
-        Route::get('address/delete/{id}', [AuthenticationController::class, 'addressdelete']);
+        Route::delete('address/delete/{id}', [AuthenticationController::class, 'addressdelete']);
         Route::post('address/new', [AuthenticationController::class, 'address_new']);
         Route::post('credit/new', [CreditController::class, 'credit_new']);
         Route::get('credit', [CreditController::class, 'credit_get']);
