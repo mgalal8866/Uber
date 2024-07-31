@@ -15,6 +15,10 @@ return [
 
     'cash' => 'Cash',
     'credit' => 'Credit',
+    'category' => 'Category',
+    'users' => 'Users',
+    'drivers' => 'Drivers',
+    'trips' => 'Trips',
 
 
 ];

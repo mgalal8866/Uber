@@ -13,8 +13,18 @@ return [
     |
     */
 
-    'cash' => 'Cash',
-    'credit' => 'Credit',
 
+    'dashboard'     => 'Home',
+    'cash'          => 'Cash',
+    'credit'        => 'Credit',
+    'category'      => 'Category',
+    'users'         => 'Users',
+    'drivers'       => 'Drivers',
+    'trips'         => 'Trips',
+    'settings'      => 'Settings',
+    'name'          => 'Name',
+    'image'         => 'Image',
+    'charge_km'     => 'charge_km',
+    'charge_min'    => 'charge_min',
 
 ];

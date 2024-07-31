@@ -9,10 +9,10 @@
                 , made with ❤️ by
                 <a   target="_blank" class="footer-link text-primary fw-medium">HMM TEAM</a>
             </div>
-            <div class="d-none d-lg-inline-block">
+            {{-- <div class="d-none d-lg-inline-block">
                 <a href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/" target="_blank"
                     class="footer-link me-4">Documentation</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </footer>

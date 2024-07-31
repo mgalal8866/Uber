@@ -5,9 +5,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Page 1 - Starter Kit | Vuexy - Bootstrap Admin Template</title>
+    <title>@yield('title', env('APP_NAME')  )</title>
 
-    <meta name="description" content="" />
+    <meta name="description" content="Uber" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
