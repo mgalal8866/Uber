@@ -3,15 +3,25 @@
 use App\Models\Trip;
 use GuzzleHttp\Client;
 use App\Events\TripAccepted;
-use App\Websockets\SocketHandler;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategorysController;
-use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Role\RoleEdit;
 use App\Livewire\Category\Index;
-use App\Livewire\Drivers\DriversIndex;
+use App\Livewire\Role\RoleIndex;
+use App\Livewire\Role\RoleCreate;
+use App\Websockets\SocketHandler;
 use App\Livewire\Trips\TripsIndex;
 use App\Livewire\Users\UsersIndex;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\Drivers\DriversIndex;
+use App\Livewire\Category\CategoryIndex;
+use App\Controllers\Admin\RoleController;
+use App\Livewire\Permission\PermissionsEdit;
+use App\Http\Controllers\CategorysController;
+use App\Livewire\Permission\PermissionsIndex;
+use App\Livewire\Permission\PermissionsCreate;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PermissionController;
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +47,22 @@ Route::get('/restart-supervisor', function () {
 });
 // Service
 Route::prefix('dashboard')->group(function () {
+    // Roles
+    // Route::get('roles/show', RoleShow::class)->name('roles.show');
+    Route::get('roles/list', RoleIndex::class)->name('roles.list');
+    Route::get('roles/create', RoleCreate::class)->name('roles.create');
+    Route::get('roles/edit/{role}', RoleEdit::class)->name('roles.edit');
 
-    Route::get('/',function(){
+    // Permissions
+    Route::get('permissions/list', PermissionsIndex::class)->name('permissions.list');
+    Route::get('permissions/create', PermissionsCreate::class)->name('permissions.create');
+    Route::get('permissions/edit/{permissions}', PermissionsEdit::class)->name('permissions.edit');
+    // Route::resource('permissions', PermissionController::class, ['except' => ['store', 'update', 'destroy']]);
+    // // Admins
+    // Route::resource('admins', AdminController::class);
+
+
+    Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
     Route::get('category', CategoryIndex::class)->name('category.index');

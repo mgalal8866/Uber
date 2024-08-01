@@ -26,5 +26,35 @@ return [
     'image'         => 'Image',
     'charge_km'     => 'charge_km',
     'charge_min'    => 'charge_min',
+    'role' => [
+        'title_singular' => 'Title',
+        'fields' => [
+            'permissions' => 'Permissions',
+            'title' => 'Title',
+            'id' => 'ID',
+            'title_helper' => 'title_helper',
+            'permissions_helper' => 'permissions_helper',
+        ],
+    ],
+    'permission' => [
+        'title_singular' => 'Title',
+        'fields' => [
+            'permissions' => 'Permissions',
+            'title' => 'Title',
+            'id' => 'ID',
+            'title_helper' => 'title_helper',
+            'permissions_helper' => 'permissions_helper',
+        ],
+    ],
+
+    'select_all' => 'Select All',
+    'deselect_all' => 'Deselect All',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'add' => 'Add',
+    'list' => 'List',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+
 
 ];

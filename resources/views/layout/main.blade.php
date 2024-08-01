@@ -41,6 +41,7 @@
     </div>
     <!-- / Layout wrapper -->
     @include('layout.script')
+    @stack('scripts')
 
 </body>
 

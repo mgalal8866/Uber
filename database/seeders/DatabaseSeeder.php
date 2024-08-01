@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         //    Trip::factory(200)->create();
         $this->call([
             CategoryCarTableSeeder::class,
+            PermissionRoleTableSeeder::class,
+            PermissionsTableSeeder::class,
+            // RolesTableSeeder::class
 
         ]);
     }
