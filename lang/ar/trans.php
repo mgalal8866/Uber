@@ -21,7 +21,7 @@ return [
     'permissions'   => 'Permissions',
     'username'      => 'Username',
     'password'      => 'Password',
-    'rememberme '      => 'Remember Me ',
+    'rememberme'      => 'Remember Me ',
     'credit'        => 'Credit',
     'category'      => 'Category',
     'users'         => 'Users',
