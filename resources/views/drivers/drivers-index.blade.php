@@ -26,10 +26,10 @@
                         </button>
                     @endcan
 
-                    @if (file_exists(app_path('Http/Livewire/ExcelExport.php')))
-                        <livewire:excel-export model="Role" format="csv" />
-                        <livewire:excel-export model="Role" format="xlsx" />
-                        <livewire:excel-export model="Role" format="pdf" />
+                    @if (file_exists(app_path('Livewire/ExcelExport.php')))
+                        <livewire:excel-export model="User" format="csv" />
+                        <livewire:excel-export model="User" format="xlsx" />
+                        <livewire:excel-export model="User" format="pdf" />
                     @endif
                 </div>
                 <div class="w-100 text-end">

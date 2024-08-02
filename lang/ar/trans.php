@@ -68,6 +68,11 @@ return [
     'account' => 'Account',
     'driver' => 'Driver',
     'action' => 'Action',
+    'amount' => 'Amount',
+    'user' => 'User',
+    'distance' => 'Distance',
+    'min' => 'minute',
+    'lastupdate' => 'Last Update',
 
 
 ];
