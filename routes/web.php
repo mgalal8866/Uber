@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Trip;
+use App\Models\Admin;
 use GuzzleHttp\Client;
 use App\Events\TripAccepted;
 use App\Livewire\Role\RoleEdit;
@@ -34,6 +35,7 @@ use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 |
 */
 
+Auth::routes();
 Route::get('/restart-supervisor', function () {
     $output = [];
     $returnVar = null;
@@ -46,7 +48,7 @@ Route::get('/restart-supervisor', function () {
     return response()->json(['status' => 'success', 'message' => 'Supervisor restarted successfully', 'output' => $output]);
 });
 // Service
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware(['auth:admin'])->group(function () {
     // Roles
     // Route::get('roles/show', RoleShow::class)->name('roles.show');
     Route::get('roles/list', RoleIndex::class)->name('roles.list');
@@ -70,39 +72,45 @@ Route::prefix('dashboard')->group(function () {
     Route::get('drivers', DriversIndex::class)->name('drivers.index');
     Route::get('trips', TripsIndex::class)->name('trips.index');
 });
-Route::get('/', function () {
-    // TripAccepted::dispatch('1');
-    // $locations = [
-    //     [
-    //         'latitude' => '31.260262',
-    //         'longitude' => '29.988416',
-    //         'name' => 'loc1',
-    //         'icon' => 'http://public.test/files/woman.png',
-    //         'size_w' => 30,
-    //         'size_h' => 40
-    //     ],
-    //     [
-    //         'latitude' => '31.247963',
-    //         'longitude' => '29.967503',
-    //         'name' => 'loc1',
-    //         'icon' => 'http://public.test/files/1.webp'
-    //     ],
-
-
-    //     [
-    //         'latitude' => '31.266235',
-    //         'longitude' => '29.989349',
-    //         'name' => 'loc2',
-    //         'icon' => 'http://public.test/files/1.webp'
-    //     ]
-    // ];
-
-    // //  $locations = Trip::take(5)->get();
-    // $locations = findNearbyDrivers('31.252717', '30.007483' );
-
-    // return view('welcome', compact('locations'));
-});
 WebSocketsRouter::webSocket('/socket', SocketHandler::class);
+route::get('sss',function(){
+    Admin::create([
+        'email'=>'admin@admin.com',
+        'password'=>'admin'
+    ]);
+});
+// Route::get('/', function () {
+//     // TripAccepted::dispatch('1');
+//     // $locations = [
+//     //     [
+//     //         'latitude' => '31.260262',
+//     //         'longitude' => '29.988416',
+//     //         'name' => 'loc1',
+//     //         'icon' => 'http://public.test/files/woman.png',
+//     //         'size_w' => 30,
+//     //         'size_h' => 40
+//     //     ],
+//     //     [
+//     //         'latitude' => '31.247963',
+//     //         'longitude' => '29.967503',
+//     //         'name' => 'loc1',
+//     //         'icon' => 'http://public.test/files/1.webp'
+//     //     ],
+
+
+//     //     [
+//     //         'latitude' => '31.266235',
+//     //         'longitude' => '29.989349',
+//     //         'name' => 'loc2',
+//     //         'icon' => 'http://public.test/files/1.webp'
+//     //     ]
+//     // ];
+
+//     // //  $locations = Trip::take(5)->get();
+//     // $locations = findNearbyDrivers('31.252717', '30.007483' );
+
+//     // return view('welcome', compact('locations'));
+// });
 // Route::get('/qa1', function () {
 //     return findNearbyDrivers('31.252717', '30.007483');
 // });

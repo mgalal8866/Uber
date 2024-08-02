@@ -4,7 +4,7 @@
             <span class="app-brand-logo demo">
                 <img src = "{{ asset('logo.svg') }}" width="32" />
 
-                
+
             </span>
             <span class="app-brand-text demo menu-text fw-bold">Uber Women</span>
         </a>
@@ -49,6 +49,30 @@
                 <div data-i18n="Page 2">{{ __('trans.trips') }}</div>
             </a>
         </li>
+        <li class="menu-item  {{ Route::is('roles*') ||  Route::is('permissions*') ? 'open' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons ti ti-settings"></i>
+              <div>{{ __('trans.roles&permissions') }}</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item {{ Route::is('roles*') ? 'active' : '' }}">
+                <a href="{{ route('roles.list') }}" class="menu-link">
+                  <div >{{ __('trans.roles') }}</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Route::is('permissions*') ? 'active' : '' }}">
+                <a href="{{ route('permissions.list') }}" class="menu-link">
+                  <div >{{ __('trans.permissions') }}</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        {{-- <li class="menu-item {{ Route::is('trips*') ? 'active' : '' }}">
+            <a href="{{ route('trips.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-app-window"></i>
+                <div data-i18n="Page 2">{{ __('trans.roles&permissions') }}</div>
+            </a>
+        </li> --}}
         <li class="menu-item {{ Route::is('settings*') ? 'active' : '' }}">
             <a href="#" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-app-window"></i>

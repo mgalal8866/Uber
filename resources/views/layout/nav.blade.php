@@ -52,16 +52,18 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-medium d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-medium d-block">{{ auth::user()->name }}</span>
+                            <small class="text-muted">@foreach(auth()->user()->roles as $role)
+                                 {{ $role->title }} 
+                                @endforeach </small>
                           </div>
                         </div>
                       </a>
                     </li>
-                    <li>
+                    {{-- <li>
                       <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                       <a class="dropdown-item" href="#">
                         <i class="ti ti-user-check me-2 ti-sm"></i>
                         <span class="align-middle">My Profile</span>
@@ -83,15 +85,22 @@
                           >
                         </span>
                       </a>
-                    </li>
+                    </li> --}}
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="ti ti-logout me-2 ti-sm"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="ti ti-logout me-2 ti-sm"></i>
+                                <span class="align-middle">
+                                Logout
+                            </span>
+                            </button>
+                          </form>
+
                     </li>
                   </ul>
                 </li>

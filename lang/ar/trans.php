@@ -16,6 +16,12 @@ return [
 
     'dashboard'     => 'Home',
     'cash'          => 'Cash',
+    'roles&permissions'      => 'Roles & Permissions',
+    'roles'         => 'Roles',
+    'permissions'   => 'Permissions',
+    'username'      => 'Username',
+    'password'      => 'Password',
+    'rememberme '      => 'Remember Me ',
     'credit'        => 'Credit',
     'category'      => 'Category',
     'users'         => 'Users',
@@ -27,8 +33,9 @@ return [
     'charge_km'     => 'charge_km',
     'charge_min'    => 'charge_min',
     'role' => [
-        'title_singular' => 'Title',
+        'title_singular' => 'Role',
         'fields' => [
+            'roles' => 'roles',
             'permissions' => 'Permissions',
             'title' => 'Title',
             'id' => 'ID',
