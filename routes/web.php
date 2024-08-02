@@ -1,26 +1,19 @@
 <?php
 
-use App\Models\Trip;
 use App\Models\Admin;
-use GuzzleHttp\Client;
-use App\Events\TripAccepted;
 use App\Livewire\Role\RoleEdit;
-use App\Livewire\Category\Index;
 use App\Livewire\Role\RoleIndex;
 use App\Livewire\Role\RoleCreate;
 use App\Websockets\SocketHandler;
 use App\Livewire\Trips\TripsIndex;
 use App\Livewire\Users\UsersIndex;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Drivers\DriversIndex;
 use App\Livewire\Category\CategoryIndex;
-use App\Controllers\Admin\RoleController;
 use App\Livewire\Permission\PermissionsEdit;
-use App\Http\Controllers\CategorysController;
 use App\Livewire\Permission\PermissionsIndex;
 use App\Livewire\Permission\PermissionsCreate;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\PermissionController;
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 
 
