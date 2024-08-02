@@ -14,7 +14,7 @@ return [
     */
 
 
-    'dashboard'     => 'Home',
+    'dashboard'     => 'Statistics',
     'cash'          => 'Cash',
     'roles&permissions'      => 'Roles & Permissions',
     'roles'         => 'Roles',
@@ -30,8 +30,8 @@ return [
     'settings'      => 'Settings',
     'name'          => 'Name',
     'image'         => 'Image',
-    'charge_km'     => 'charge_km',
-    'charge_min'    => 'charge_min',
+    'charge_km'     => 'Charge Km',
+    'charge_min'    => 'Charge Min',
     'role' => [
         'title_singular' => 'Role',
         'fields' => [
@@ -62,6 +62,8 @@ return [
     'list' => 'List',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'phone' => 'Phone',
+    'balance' => 'Balance',
 
 
 ];

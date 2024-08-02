@@ -21,62 +21,64 @@
         <!-- Page -->
         <li class="menu-item {{ Route::is('dashboard*') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Page 1">{{ __('trans.dashboard') }}</div>
+                <i class="menu-icon fa-solid fa-square-poll-vertical"></i>
+                
+                <div>{{ __('trans.dashboard') }}</div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('category*') ? 'active' : '' }}">
             <a href="{{ route('category.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Page 1">{{ __('trans.category') }}</div>
+                <i class="menu-icon fa-solid fa-car"></i>
+                <div>{{ __('trans.category') }}</div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('users*') ? 'active' : '' }}">
             <a href="{{ route('users.index') }}" class="menu-link ">
-                <i class="menu-icon tf-icons ti ti-app-window"></i>
-                <div data-i18n="Page 2">{{ __('trans.users') }}</div>
+                <i class="menu-icon fa-solid fa-user-group fa-xs	"></i>
+                {{-- <i class="menu-icon fa-solid fa-users fa-sm"></i> --}}
+                <div>{{ __('trans.users') }}</div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('drivers*') ? 'active' : '' }}">
             <a href="{{ route('drivers.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-app-window"></i>
-                <div data-i18n="Page 2">{{ __('trans.drivers') }}</div>
+                <i class="menu-icon fa-solid fa-road"></i>
+                <div>{{ __('trans.drivers') }}</div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('trips*') ? 'active' : '' }}">
             <a href="{{ route('trips.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-app-window"></i>
-                <div data-i18n="Page 2">{{ __('trans.trips') }}</div>
+                <i class="menu-icon fa-solid fa-route"></i>
+                <div>{{ __('trans.trips') }}</div>
             </a>
         </li>
-        <li class="menu-item  {{ Route::is('roles*') ||  Route::is('permissions*') ? 'open' : '' }}">
+        <li class="menu-item  {{ Route::is('roles*') || Route::is('permissions*') ? 'open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons ti ti-settings"></i>
-              <div>{{ __('trans.roles&permissions') }}</div>
+                <i class="menu-icon tf-icons ti ti-settings"></i>
+                <div>{{ __('trans.roles&permissions') }}</div>
             </a>
             <ul class="menu-sub">
-              <li class="menu-item {{ Route::is('roles*') ? 'active' : '' }}">
-                <a href="{{ route('roles.list') }}" class="menu-link">
-                  <div >{{ __('trans.roles') }}</div>
-                </a>
-              </li>
-              <li class="menu-item {{ Route::is('permissions*') ? 'active' : '' }}">
-                <a href="{{ route('permissions.list') }}" class="menu-link">
-                  <div >{{ __('trans.permissions') }}</div>
-                </a>
-              </li>
+                <li class="menu-item {{ Route::is('roles*') ? 'active' : '' }}">
+                    <a href="{{ route('roles.list') }}" class="menu-link">
+                        <div>{{ __('trans.roles') }}</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('permissions*') ? 'active' : '' }}">
+                    <a href="{{ route('permissions.list') }}" class="menu-link">
+                        <div>{{ __('trans.permissions') }}</div>
+                    </a>
+                </li>
             </ul>
-          </li>
+        </li>
         {{-- <li class="menu-item {{ Route::is('trips*') ? 'active' : '' }}">
             <a href="{{ route('trips.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-app-window"></i>
-                <div data-i18n="Page 2">{{ __('trans.roles&permissions') }}</div>
+                <div>{{ __('trans.roles&permissions') }}</div>
             </a>
         </li> --}}
         <li class="menu-item {{ Route::is('settings*') ? 'active' : '' }}">
             <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-app-window"></i>
-                <div data-i18n="Page 2">{{ __('trans.settings') }}</div>
+                <i class="menu-icon fa-solid fa-gear"></i>
+                <div>{{ __('trans.settings') }}</div>
             </a>
         </li>
     </ul>

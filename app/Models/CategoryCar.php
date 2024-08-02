@@ -20,6 +20,17 @@ class CategoryCar extends Model
 
     public function getImageurlAttribute()
     {
-        return $this->image?path('category') . $this->image: path('').'no-imag.png';
+        // $localPath = public_path('files/users/' . $this->id . '/' . $this->image);
+        // $urlPath = asset('files/users/' . $this->id . '/' . $this->image);
+
+        // if (File::exists($localPath)) {
+        //     if ($this->image == null) {
+        //         return asset('assets/img/default_avatar.png');
+        //     }
+        //     return $urlPath;
+        // } else {
+
+        //     return
+        return $this->image?path('category') . $this->image:  asset('assets/img/no-image.png');
     }
 }

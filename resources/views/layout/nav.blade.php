@@ -15,6 +15,7 @@
                     <i class="ti ti-md"></i>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-start dropdown-styles">
+
                     <li>
                       <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
                         <span class="align-middle"><i class="ti ti-sun me-2"></i>Light</span>
@@ -35,6 +36,25 @@
               </div>
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
+  <!-- Language -->
+  {{-- <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+      <i class="ti ti-language rounded-circle ti-md"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <a class="dropdown-item" href="javascript:void(0);" data-language="en" data-text-direction="ltr">
+          <span class="align-middle">English</span>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="javascript:void(0);" data-language="ar" data-text-direction="rtl">
+          <span class="align-middle">Arabic</span>
+        </a>
+      </li>
+    </ul>
+  </li> --}}
+  <!--/ Language -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -54,7 +74,7 @@
                           <div class="flex-grow-1">
                             <span class="fw-medium d-block">{{ auth::user()->name }}</span>
                             <small class="text-muted">@foreach(auth()->user()->roles as $role)
-                                 {{ $role->title }} 
+                                 {{ $role->title }}
                                 @endforeach </small>
                           </div>
                         </div>

@@ -40,12 +40,15 @@ class DashboardController extends Controller
         $startOfWeek = $today->copy()->startOfWeek()->subWeek(); // Start of the previous week
         $endOfWeek = $today->copy()->endOfWeek()->subWeek();     // End of the previous week
         $data['trip_charts_period'] = 'last7';
-        $data['trip_charts'] = Trip::select(DB::raw('DATE(is_completed) as date'), DB::raw('sum(final_amount) as final_amount'))
+        $tripData = Trip::select(DB::raw('DATE(is_completed) as date'), DB::raw('sum(final_amount) as final_amount'))
             ->where('status', 'completed')
             ->whereBetween('is_completed', [$startOfWeek, $endOfWeek])
             ->groupBy(DB::raw('DATE(is_completed)'))
-            ->pluck('final_amount', 'date');
-      
+            ->get();
+
+            $data['trip_charts_date']= $tripData->pluck('date')->toArray();
+            $data['trip_charts_final_amount']= $tripData->pluck('final_amount')->toArray();
+            // dd($data['trip_charts_final_amount'], $data['trip_charts_date']);
         return view('dashboard', compact('data'));
     }
 }

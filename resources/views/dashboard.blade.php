@@ -192,7 +192,8 @@
                 <div class="card-header header-elements">
                     <h5 class="card-title mb-0">Latest Statistics</h5>
                     <div class="card-action-element ms-auto py-0">
-                        <div class="dropdown">
+                       Last 7 Days
+                        {{-- <div class="dropdown">
                             <button type="button" class="btn dropdown-toggle px-0" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <i class="ti ti-calendar"></i>
@@ -232,7 +233,7 @@
                                         Month</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -249,82 +250,113 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/charts-chartjs.js') }}"></script> --}}
     <script>
-            const
-        cyanColor = '#28dac6'
-        ;
-        const barChart = document.getElementById('barChart');
-        if (barChart) {
-            const barChartVar = new Chart(barChart, {
-                type: 'bar',
-                data: {
-                    labels: [
-                        '24/7',
-                        '25/7',
-                        '26/7',
-                        '27/7',
-                        '28/7',
-                        '29/7',
-                        '30/7',
-                    ],
-                    datasets: [{
-                        data: [275, 90, 190, 205, 125, 85, 55],
-                        backgroundColor: cyanColor,
-                        borderColor: 'transparent',
-                        maxBarThickness: 15,
-                        borderRadius: {
-                            topRight: 15,
-                            topLeft: 15
-                        }
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 500
+        (function() {
+            // Color Variables
+            const purpleColor = '#836AF9',
+                yellowColor = '#ffe800',
+                cyanColor = '#28dac6',
+                orangeColor = '#FF8132',
+                orangeLightColor = '#FDAC34',
+                oceanBlueColor = '#299AFF',
+                greyColor = '#4F5D70',
+                greyLightColor = '#EDF1F4',
+                blueColor = '#2B9AFF',
+                blueLightColor = '#84D0FF';
+
+            let cardColor, headingColor, labelColor, borderColor, legendColor;
+            const tripChartsFinalAmount = @json($data['trip_charts_final_amount']);
+            const tripChartsDate = @json($data['trip_charts_date']);
+            if (isDarkStyle) {
+                cardColor = config.colors_dark.cardColor;
+                headingColor = config.colors_dark.headingColor;
+                labelColor = config.colors_dark.textMuted;
+                legendColor = config.colors_dark.bodyColor;
+                borderColor = config.colors_dark.borderColor;
+            } else {
+                cardColor = config.colors.cardColor;
+                headingColor = config.colors.headingColor;
+                labelColor = config.colors.textMuted;
+                legendColor = config.colors.bodyColor;
+                borderColor = config.colors.borderColor;
+            }
+
+            // Set height according to their data-height
+            // --------------------------------------------------------------------
+            const chartList = document.querySelectorAll('.chartjs');
+            chartList.forEach(function(chartListItem) {
+                chartListItem.height = chartListItem.dataset.height;
+            });
+
+            // Bar Chart
+            // --------------------------------------------------------------------
+
+            const barChart = document.getElementById('barChart');
+            if (barChart) {
+                const barChartVar = new Chart(barChart, {
+                    type: 'bar',
+                    data: {
+                        labels: tripChartsDate,
+                        datasets: [{
+                            data: tripChartsFinalAmount,
+                            backgroundColor: cyanColor,
+                            borderColor: 'transparent',
+                            maxBarThickness: 15,
+                            borderRadius: {
+                                topRight: 15,
+                                topLeft: 15
+                            }
+                        }]
                     },
-                    plugins: {
-                        tooltip: {
-                            rtl: isRtl,
-                            backgroundColor: cardColor,
-                            titleColor: headingColor,
-                            bodyColor: legendColor,
-                            borderWidth: 1,
-                            borderColor: borderColor
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: {
+                            duration: 500
                         },
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: borderColor,
-                                drawBorder: false,
+                        plugins: {
+                            tooltip: {
+                                rtl: isRtl,
+                                backgroundColor: cardColor,
+                                titleColor: headingColor,
+                                bodyColor: legendColor,
+                                borderWidth: 1,
                                 borderColor: borderColor
                             },
-                            ticks: {
-                                color: labelColor
+                            legend: {
+                                display: false
                             }
                         },
-                        y: {
-                            min: 0,
-                            max: 400,
-                            grid: {
-                                color: borderColor,
-                                drawBorder: false,
-                                borderColor: borderColor
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: borderColor,
+                                    drawBorder: false,
+                                    borderColor: borderColor
+                                },
+                                ticks: {
+                                    color: labelColor
+                                }
                             },
-                            ticks: {
-                                stepSize: 100,
-                                color: labelColor
+                            y: {
+                                min: 0,
+                                max: 400,
+                                grid: {
+                                    color: borderColor,
+                                    drawBorder: false,
+                                    borderColor: borderColor
+                                },
+                                ticks: {
+                                    stepSize: 100,
+                                    color: labelColor
+                                }
                             }
                         }
                     }
-                }
-            });
-        }
+                });
+            }
+
+        })();
     </script>
 @endpush

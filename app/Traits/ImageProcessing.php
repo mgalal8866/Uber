@@ -23,6 +23,18 @@ trait ImageProcessing
         }
         return  $path;
     }
+    public function path2($folder, $folder2 = null)
+    {
+        $path = public_path() . '/files' . '/' . $folder . '/' ;
+        if ($folder2 != null) {
+
+            $path =  $path . '/' .  $folder2 . '/';
+        }
+        if (!File::exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        return  $path;
+    }
     public function deletefile($filename,$id, $folder, $folder2 = null)
     {
         $path = public_path() . '/files' . '/' . $folder . '/' . $id . '/';
@@ -34,15 +46,20 @@ trait ImageProcessing
             File::delete($path.$filename);
         }
     }
-   
+
     public function saveImage($image, $id, $folder, $folder2 = null)
     {
         $manager = new ImageManager(new Driver());
         $img = $manager->read($image);
         $str_random = Str::random(4);
         $imgpath = $str_random . '-' . time() . '.' . $image->getClientOriginalExtension();
+if($id == null){
 
-        $img->toJpeg(80)->save($this->path($id, $folder, $folder2) .  $imgpath);
+    $img->toJpeg(80)->save($this->path2( $folder, $folder2) .  $imgpath);
+}else{
+
+    $img->toJpeg(80)->save($this->path($id, $folder, $folder2) .  $imgpath);
+}
 
         return $imgpath;
     }
@@ -87,7 +104,7 @@ trait ImageProcessing
         $img->save(storage_path('app/imagesfp') . '/' . $imgpath);
         return $imgpath;
     }
-    public function saveImageAndThumbnail($Thefile, $thumb = false, $id = '23123', $folder = 'course', $folder2 = null, $height = null, $width = null)
+    public function saveImageAndThumbnail($Thefile, $thumb = false, $id = null, $folder = 'course', $folder2 = null, $height = null, $width = null)
     {
         $dataX = array();
         if ($height != null && $width != null) {
@@ -101,6 +118,24 @@ trait ImageProcessing
             $dataX['thumbnailsm'] = $this->aspect4resize($Thefile, 256, 144, $id, $folder, $folder2);
             $dataX['thumbnailmd'] = $this->aspect4resize($Thefile, 426, 240, $id, $folder, $folder2);
             $dataX['thumbnailxl'] = $this->aspect4resize($Thefile, 640, 360, $id, $folder, $folder2);
+        }
+
+        return $dataX;
+    }
+    public function categorysaveImageAndThumbnail($Thefile, $thumb = false,   $folder = 'course', $folder2 = null, $height = null, $width = null)
+    {
+        $dataX = array();
+        if ($height != null && $width != null) {
+
+            $dataX['image'] = $this->aspect4resize($Thefile,  $width, $height,   $folder, $folder2);
+        } else {
+            $dataX['image'] = $this->saveImage($Thefile,  $folder, $folder2);
+        }
+
+        if ($thumb) {
+            $dataX['thumbnailsm'] = $this->aspect4resize($Thefile, 256, 144,  $folder, $folder2);
+            $dataX['thumbnailmd'] = $this->aspect4resize($Thefile, 426, 240,  $folder, $folder2);
+            $dataX['thumbnailxl'] = $this->aspect4resize($Thefile, 640, 360,  $folder, $folder2);
         }
 
         return $dataX;

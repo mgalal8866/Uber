@@ -19,7 +19,8 @@
                     @foreach ( $users as  $user)
                     <tr>
                         <td>
-                            <span class="fw-medium">{{ $user->image }}</span>
+                            <img src="{{ $user->imageurl }}" alt="user-avatar" class="d-block w-px-50 h-px-50 rounded" id="uploadedAvatar">
+
                         </td>
                         <td>
                             <span class="fw-medium">{{ $user->name }}</span>

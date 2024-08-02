@@ -9,7 +9,9 @@ use App\Livewire\Trips\TripsIndex;
 use App\Livewire\Users\UsersIndex;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Drivers\DriversIndex;
+use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Permission\PermissionsEdit;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Permission\PermissionsIndex;
@@ -59,6 +61,8 @@ Route::prefix('dashboard')->middleware(['auth:admin'])->group(function () {
 
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
     Route::get('category', CategoryIndex::class)->name('category.index');
+    Route::get('category/create', CategoryCreate::class)->name('category.create');
+    Route::get('category/edit/{categorycar}', CategoryEdit::class)->name('category.edit');
     Route::get('users', UsersIndex::class)->name('users.index');
     Route::get('drivers', DriversIndex::class)->name('drivers.index');
     Route::get('trips', TripsIndex::class)->name('trips.index');

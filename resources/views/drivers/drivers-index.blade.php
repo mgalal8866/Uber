@@ -17,7 +17,9 @@
                     @foreach ( $drivers as  $driver)
                     <tr>
                         <td>
-                            <span class="fw-medium">{{ $driver->image }}</span>
+                            <img src="{{ $driver->imageurl }}" alt="user-avatar" class="d-block w-px-50 h-px-50 rounded" id="uploadedAvatar">
+
+                            
                         </td>
                         <td>
                             <span class="fw-medium">{{ $driver->name }}</span>
