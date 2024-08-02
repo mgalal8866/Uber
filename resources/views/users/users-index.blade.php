@@ -3,7 +3,43 @@
         {{ env('APP_NAME') . ' - ' . __('trans.users') }}
     @endsection
     <div class="card">
-        <h5 class="card-header">{{ __('trans.users') }}</h5>
+        <div class="card-header border-bottom  ">
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="card-title mb-0">
+                    {{ trans('trans.users') }}
+
+                </h6>
+
+            </div>
+            <div class="d-flex justify-content-between my-3  ">
+                <div class="w-100">
+                    Per page:
+                    <select wire:model="perPage" class="form-select w-25 d-inline">
+                        @foreach ($paginationOptions as $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+
+                    @can('role_delete')
+                        <button class="btn btn-danger ms-3" type="button" wire:click="confirm('deleteSelected')"
+                            wire:loading.attr="disabled" {{ $this->selectedCount ? '' : 'disabled' }}>
+                            {{ __('Delete Selected') }}
+                        </button>
+                    @endcan
+
+                    @if (file_exists(app_path('Http/Livewire/ExcelExport.php')))
+                        <livewire:excel-export model="Role" format="csv" />
+                        <livewire:excel-export model="Role" format="xlsx" />
+                        <livewire:excel-export model="Role" format="pdf" />
+                    @endif
+                </div>
+                <div class="w-100 text-end">
+                    Search:
+                    <input type="text" wire:model.debounce.300ms="search" class="form-control w-50 d-inline-block" />
+                </div>
+            </div>
+        </div>
+
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
                 <thead>
@@ -12,7 +48,7 @@
                         <th>{{ __('trans.name') }}</th>
                         <th>{{ __('trans.phone') }}</th>
                         <th>{{ __('trans.balance') }}</th>
-                        <th>Actions</th>
+                        <th>{{ __('trans.status') }}</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -31,11 +67,14 @@
                         <td>
                             <span class="fw-medium">{{ $user->balance }}</span>
                         </td>
+                        <td>
+                            <span class="badge badge-center rounded-pill bg-{{ $user->status == 'accept' ? 'success' : ( $user->status == 'block' ? 'danger' : 'warning')}}"><i class="ti ti-{{ $user->status == 'accept'?'check':($user->status == 'block'?'close' :'clock')}}"></i></span>
+                        </td>
 
 
 
                         {{-- <td><span class="badge bg-label-warning me-1">Pending</span></td> --}}
-                        <td>
+                        {{-- <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                     data-bs-toggle="dropdown">
@@ -48,7 +87,7 @@
                                             class="ti ti-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
-                        </td>
+                        </td> --}}
                     </tr>
                     @endforeach
 

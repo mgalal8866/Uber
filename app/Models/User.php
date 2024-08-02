@@ -4,15 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
+use App\Support\HasAdvancedFilter;
+use Illuminate\Support\Facades\File;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasAdvancedFilter,HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +26,15 @@ class User extends Authenticatable
     //     'email',
     //     'password',
     // ];
+    public $orderable = [
+        'id',
+        'name',
+    ];
+    public $filterable = [
+        'id',
+        'name',
+        'phone',
+    ];
     protected $guarded = [];
     /**
      * The attributes that should be hidden for serialization.

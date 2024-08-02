@@ -64,6 +64,10 @@ return [
     'delete' => 'Delete',
     'phone' => 'Phone',
     'balance' => 'Balance',
+    'status' => 'Status',
+    'account' => 'Account',
+    'driver' => 'Driver',
+    'action' => 'Action',
 
 
 ];
