@@ -6,11 +6,12 @@ use App\Livewire\Role\RoleIndex;
 use App\Livewire\Role\RoleCreate;
 use App\Websockets\SocketHandler;
 use App\Livewire\Trips\TripsIndex;
-use App\Livewire\Users\UsersIndex; 
+use App\Livewire\Users\UsersIndex;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Drivers\DriversIndex;
 use App\Livewire\Category\CategoryIndex;
 use App\Livewire\Permission\PermissionsEdit;
+use App\Http\Controllers\DashboardController;
 use App\Livewire\Permission\PermissionsIndex;
 use App\Livewire\Permission\PermissionsCreate;
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
@@ -56,9 +57,7 @@ Route::prefix('dashboard')->middleware(['auth:admin'])->group(function () {
     // Route::resource('admins', AdminController::class);
 
 
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class,'index'])->name('dashboard');
     Route::get('category', CategoryIndex::class)->name('category.index');
     Route::get('users', UsersIndex::class)->name('users.index');
     Route::get('drivers', DriversIndex::class)->name('drivers.index');

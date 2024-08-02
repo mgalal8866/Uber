@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable
 {
@@ -49,11 +50,19 @@ class User extends Authenticatable
 
     public function getImageurlAttribute()
     {
-        if($this->image ==null){
 
-            return '';
+        $localPath = public_path('files/users/' . $this->id . '/' . $this->image);
+        $urlPath = asset('files/users/' . $this->id . '/' . $this->image);
+
+        if (File::exists($localPath)) {
+            if ($this->image == null) {
+                return asset('assets/img/default_avatar.png');
+            }
+            return $urlPath;
+        } else {
+
+            return asset('assets/img/default_avatar.png');
         }
-        return path2('users',$this->id)  . $this->image;
     }
     public function otp()
     {
@@ -75,9 +84,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCredit::class);
     }
-    public function trips()
+    public function trips_user()
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasMany(Trip::class, 'user_id');
+    }
+    public function trips_driver()
+    {
+        return $this->hasMany(Trip::class, 'driver_id');
     }
     public function rating()
     {
