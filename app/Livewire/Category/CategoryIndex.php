@@ -11,7 +11,7 @@ class CategoryIndex extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public int $perPage = 1;
+    public int $perPage = 20;
 
     public function render()
     {
