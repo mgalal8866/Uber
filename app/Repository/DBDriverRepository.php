@@ -122,8 +122,10 @@ class DBDriverRepository implements DriverRepositoryinterface
                 return Resp('', __('messages.notfound'), 200, false);
             }
         } catch (\Illuminate\Validation\ValidationException $ex) {
+            Log::error(  $ex->errors());
             return response()->json(['errors' => $ex->errors()], 422);
         } catch (\Exception $ex) {
+            Log::error( $ex->getMessage());
             DB::rollback();
             return Resp([], $ex->getMessage(), 404, false);
         }
