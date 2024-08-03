@@ -41,8 +41,7 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function registration()
     {
-        Log::error($this->request->driving_license_doc);
-        Log::error($this->request->all());
+       
         try {
             $validator = Validator::make($this->request->all(), [
                 'phone'                    => 'required',
@@ -74,8 +73,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 
             $data = $validator->validated();
             Log::error( $data);
-            Log::error($data['driving_license_doc']->getClientOriginalExtension());
-            Log::error($data['driving_license_doc']);
+
             $publicPath                  = 'public/documents/' . $user->id;
             $nationalIdDocName           =   Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
             $drivingLicenseDocName       =   Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
