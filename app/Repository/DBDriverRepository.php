@@ -49,7 +49,7 @@ class DBDriverRepository implements DriverRepositoryinterface
                 'brand_id'                 => 'required|exists:car_brands,id',
                 'model_id'                 => 'required|exists:car_models,id',
                 'color'                    => 'required|string|max:255',
-                'release_year'             => 'required|integer|min:1900|max:' . date('Y'),
+                'release_year'             => 'required|integer|max:' . date('Y'),
                 'vehicle_number'           => 'required',
                 'passengers_number'        => 'required|integer|min:1',
                 'national_id_number'       => 'required|string|max:255',
@@ -73,6 +73,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
             $data = $validator->validated();
+            Log::error( $data);
             Log::error($data['driving_license_doc']->getClientOriginalExtension());
             Log::error($data['driving_license_doc']);
             $publicPath                  = 'public/documents/' . $user->id;
