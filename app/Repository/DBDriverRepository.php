@@ -15,6 +15,7 @@ use App\Models\ExtraServices;
 use App\Traits\MapsProcessing;
 use App\Traits\ImageProcessing;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -40,7 +41,7 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function registration()
     {
-        dd($this->request->all());
+        Log::error($this->request->all());
         try {
             $validator = Validator::make($this->request->all(), [
                 'phone'                    => 'required',
