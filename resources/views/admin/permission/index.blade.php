@@ -10,7 +10,7 @@
                 </h6>
 
                 @can('permission_create')
-                    <a class="btn btn-indigo" href="{{ route('admin.permissions.create') }}">
+                    <a class="btn btn-indigo" href="{{ route('permissions.create') }}">
                         {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}
                     </a>
                 @endcan
