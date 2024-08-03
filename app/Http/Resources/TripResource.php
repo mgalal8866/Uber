@@ -25,8 +25,8 @@ class TripResource extends JsonResource
             'destination_location'     => $this->destination_location,
             'destination_address'      => $this->destination_address,
 
-            'distance'                 => $this->distance . 'k.m',
-            'min'                      => $this->min,
+            'distance'                 =>  number_format($this->distance,1) . 'k.m',
+            'min'                      => number_format($this->min),
             'time_arrival'             => Carbon::now()->addMinutes($this->min)->translatedFormat('H:i A'),
             'suggested_amount'         => $this->suggested_amount . ' ر.س ',
             'final_amount'             => $this->final_amount,
