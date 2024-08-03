@@ -82,7 +82,10 @@
 
                         {{-- <td><span class="badge bg-label-warning me-1">Pending</span></td> --}}
                         <td>
-                            <a class="btn btn-success btn-sm" href="javascript:void(0);">  View Doc</a>
+                            @if ($driver->driver)
+
+                            <a class="btn btn-success btn-sm" href="{{ route('drivers.viewdoc',['driver'=>   $driver->driver->id]) }}"  >  View Doc</a>
+                            @endif
                             {{-- <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                     data-bs-toggle="dropdown">

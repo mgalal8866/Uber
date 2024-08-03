@@ -14,6 +14,7 @@ use App\Livewire\Category\CategoryIndex;
 use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Permission\PermissionsEdit;
 use App\Http\Controllers\DashboardController;
+use App\Livewire\Drivers\ViewDoc;
 use App\Livewire\Permission\PermissionsIndex;
 use App\Livewire\Permission\PermissionsCreate;
 use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
@@ -65,6 +66,7 @@ Route::prefix('dashboard')->middleware(['auth:admin'])->group(function () {
     Route::get('category/edit/{categorycar}', CategoryEdit::class)->name('category.edit');
     Route::get('users', UsersIndex::class)->name('users.index');
     Route::get('drivers', DriversIndex::class)->name('drivers.index');
+    Route::get('drivers/view/docoment/{driver}', ViewDoc::class)->name('drivers.viewdoc');
     Route::get('trips', TripsIndex::class)->name('trips.index');
 });
 WebSocketsRouter::webSocket('/socket', SocketHandler::class);
