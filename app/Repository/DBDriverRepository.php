@@ -41,14 +41,15 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function registration()
     {
-       
+
         try {
             $validator = Validator::make($this->request->all(), [
                 'phone'                    => 'required',
                 'brand_id'                 => 'required|exists:car_brands,id',
                 'model_id'                 => 'required|exists:car_models,id',
                 'color'                    => 'required|string|max:255',
-                'release_year'             => 'required|integer|max:' . date('Y'),
+                // 'release_year'             => 'required|integer|max:' . date('Y'),
+                'release_year'             => 'required',
                 'vehicle_number'           => 'required',
                 'passengers_number'        => 'required|integer|min:1',
                 'national_id_number'       => 'required|string|max:255',
@@ -72,7 +73,6 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
             $data = $validator->validated();
-            Log::error( $data);
 
             $publicPath                  = 'public/documents/' . $user->id;
             $nationalIdDocName           =   Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
@@ -120,10 +120,10 @@ class DBDriverRepository implements DriverRepositoryinterface
                 return Resp('', __('messages.notfound'), 200, false);
             }
         } catch (\Illuminate\Validation\ValidationException $ex) {
-            Log::error(  $ex->errors());
+        
             return response()->json(['errors' => $ex->errors()], 422);
         } catch (\Exception $ex) {
-            Log::error( $ex->getMessage());
+
             DB::rollback();
             return Resp([], $ex->getMessage(), 404, false);
         }
