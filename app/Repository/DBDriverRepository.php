@@ -72,6 +72,7 @@ class DBDriverRepository implements DriverRepositoryinterface
 
 
             $data = $validator->validated();
+            Log::error($data['driving_license_doc']->getClientOriginalExtension());
             $publicPath                  = 'public/documents/' . $user->id;
             $nationalIdDocName           =   Str::random(10) . '.' . $data['national_id_doc']->getClientOriginalExtension();
             $drivingLicenseDocName       =   Str::random(10) . '.' . $data['driving_license_doc']->getClientOriginalExtension();
