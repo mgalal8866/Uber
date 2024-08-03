@@ -61,7 +61,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'is_searching'             => Carbon::now(),
         ]);
 
-        // TripCreated::dispatch($trip);
+        TripCreated::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
     }
     public function start($trip)
