@@ -81,7 +81,9 @@ class DBTripsRepository implements TripsRepositoryinterface
     }
     public function accept($trip)
     {
-
+        if($trip->driver_id != null){
+            return Resp('', 'لقد تم تعين سائق اخر ', 404, true);
+        }
 
         $trip->update([
             'driver_id'   => Auth::user()->id,
