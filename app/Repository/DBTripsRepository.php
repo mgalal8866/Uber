@@ -47,7 +47,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'category_id'           => 'required'
         ]);
 
-        $trip = $this->request->user()->trips()->create([
+        $trip = $this->request->user()->trips_user()->create([
             'origin_location'          => $this->request->origin_location,
             'origin_address'           => $this->request->origin_address,
             'destination_location'     => $this->request->destination_location,
@@ -61,7 +61,7 @@ class DBTripsRepository implements TripsRepositoryinterface
             'is_searching'             => Carbon::now(),
         ]);
 
-        TripCreated::dispatch($trip);
+        // TripCreated::dispatch($trip);
         return Resp(new TripResource($trip), __('messages.success'), 200, true);
     }
     public function start($trip)
