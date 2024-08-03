@@ -41,7 +41,7 @@ class DBDriverRepository implements DriverRepositoryinterface
     }
     public function registration()
     {
-        Log::error($this->request->all());
+        Log::error($this->request->driving_license_doc);
         try {
             $validator = Validator::make($this->request->all(), [
                 'phone'                    => 'required',
